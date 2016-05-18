@@ -8,17 +8,32 @@ var config = {
     ignored: /[\/\\]\./,
 }
 
+function array_merge_distinct(array1, array2) {
+    return array1.concat(array2).filter((elem, pos, arr) => {
+        return arr.indexOf(elem) == pos;
+    });
+}
+
+function match_utilities(data) {
+    if (typeof data == 'undefined') {
+        return;
+    }
+
+    let pattern = /(u-[A-Za-z0-9\:\@]+)\s/g;
+    return data.match(pattern);
+}
+
 chokidar.watch(directory, config)
         .on('all', (event, path) => {
             console.log(event, path);
+
             fs.readFile(path, 'utf8', (error, data) => {
-                if (typeof data == 'undefined') { return; }
+                let matches = match_utilities(data);
 
-                let matches = data.match(/(u-[A-Za-z0-9\:\@]+)\s/g);
-                cache = cache.concat(matches).filter((elem, pos, arr) => {
-                    return arr.indexOf(elem) == pos;
-                });
+                if (! matches) { return; }
 
-                console.log(cache);
+                cache = array_merge_distinct(cache, matches);
+
+                console.log('Utilities: ', cache);
             });
         });
