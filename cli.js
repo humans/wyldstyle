@@ -84,3 +84,6 @@ function process_files(event, path) {
 }
 
 chokidar.watch(directory, config).on('all', process_files);
+
+// var emmet = require('emmet');
+// console.log(emmet.expandAbbreviation('p:10', 'css'));
