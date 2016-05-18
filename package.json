@@ -25,6 +25,10 @@
   },
   "homepage": "https://github.com/jaggy/escss#readme",
   "dependencies": {
-    "chokidar": "^1.5.0"
+    "chokidar": "^1.5.0",
+    "emmet": "^1.3.2"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5"
   }
 }
