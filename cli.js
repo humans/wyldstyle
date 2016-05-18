@@ -1,79 +1,30 @@
-var fs = require('fs');
-var chokidar = require('chokidar');
-var directory = process.argv[2];
+let filesystem        = require('fs');
+let chokidar          = require('chokidar');
+let array_unique      = require('./src/array_unique');
+let extract_utilities = require('./src/extract_utilities');
+let generate_css      = require('./src/generate_css');
+let directory         = process.argv[2];
 
-var cache = [];
-var config = { ignored: /[\/\\]\./, } // Ignore the dotfiles.
+// Ignore the dotfiles.
+let config = {
+    ignored: /[\/\\]\./,
+}
 
-function array_merge_distinct(array1, array2) {
-    return array1.concat(array2).filter((elem, pos, arr) => {
-        return arr.indexOf(elem) == pos;
+let cache = [];
+
+chokidar.watch(directory, config).on('all', (event, filename) => {
+    console.log(event, filename);
+
+    filesystem.readFile(filename, 'utf8', (error, data) => {
+        if (error) {
+            return;
+        }
+
+        let utilities = extract_utilities(data);
+        let styles = generate_css(utilities);
+
+        cache = array_unique(cache.concat(styles));
+
+        console.log(cache.join("\n"));
     });
-}
-
-function cache_utiltiies(cache, data) {
-    let matches = match_utilities(data);
-
-    if (! matches) {
-        return cache;
-    }
-
-    return array_merge_distinct(cache, matches);
-}
-
-function expand_css(emmet) {
-    let utility = emmet.replace('u-', '').trim();
-    let [ attribute, value ] = utility.split(':');
-
-    let attributes = {
-        'fw': 'font-weight',
-        'fs': 'font-size',
-
-        'p': 'padding',
-        'pl': 'padding-left',
-        'pr': 'padding-right',
-        'pt': 'padding-top',
-        'pb': 'padding-bottom',
-
-        'm': 'margin',
-        'ml': 'margin-left',
-        'mr': 'margin-right',
-        'mt': 'margin-top',
-        'mb': 'margin-bottom',
-    };
-
-    return `${attributes[attribute]}: rem(${value});`;
-}
-
-function build_css(classes) {
-    let css = "";
-
-    for (index in classes) {
-        let emmet    = classes[index];
-        let escaped  = emmet.replace(':', '\\:').replace('@', '\\@');
-        let selector = `.${escaped}`;
-        let expanded = expand_css(emmet);
-
-        css = css + `${selector} { ${expanded} }\n`;
-    }
-
-    return css;
-}
-
-function process_files(event, path) {
-    console.log(event, path);
-
-    fs.readFile(path, 'utf8', (error, data) => {
-        cache = cache_utiltiies(cache, data).sort();
-
-        let stylesheets = build_css(cache);
-        console.log(stylesheets);
-
-        console.log('Utilities: ', cache);
-    });
-}
-
-chokidar.watch(directory, config).on('all', process_files);
-
-// var emmet = require('emmet');
-// console.log(emmet.expandAbbreviation('p:10', 'css'));
+});
