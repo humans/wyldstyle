@@ -3,10 +3,7 @@ var chokidar = require('chokidar');
 var directory = process.argv[2];
 
 var cache = [];
-
-var config = {
-    ignored: /[\/\\]\./,
-}
+var config = { ignored: /[\/\\]\./, } // Ignore the dotfiles.
 
 function array_merge_distinct(array1, array2) {
     return array1.concat(array2).filter((elem, pos, arr) => {
@@ -15,25 +12,33 @@ function array_merge_distinct(array1, array2) {
 }
 
 function match_utilities(data) {
+    let pattern = /(u-[A-Za-z0-9\:\@]+)\s/g;
+
     if (typeof data == 'undefined') {
-        return;
+        return null;
     }
 
-    let pattern = /(u-[A-Za-z0-9\:\@]+)\s/g;
     return data.match(pattern);
 }
 
-chokidar.watch(directory, config)
-        .on('all', (event, path) => {
-            console.log(event, path);
+function cache_utiltiies(cache, data) {
+    let matches = match_utilities(data);
 
-            fs.readFile(path, 'utf8', (error, data) => {
-                let matches = match_utilities(data);
+    if (! matches) {
+        return cache;
+    }
 
-                if (! matches) { return; }
+    return array_merge_distinct(cache, matches);
+}
 
-                cache = array_merge_distinct(cache, matches);
+function process_files(event, path) {
+    console.log(event, path);
 
-                console.log('Utilities: ', cache);
-            });
-        });
+    fs.readFile(path, 'utf8', (error, data) => {
+        cache = cache_utiltiies(cache, data);
+
+        console.log('Utilities: ', cache);
+    });
+}
+
+chokidar.watch(directory, config).on('all', process_files);
