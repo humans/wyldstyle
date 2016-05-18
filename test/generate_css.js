@@ -6,8 +6,8 @@ describe('#generate_css', () => {
         let parameters = ['u-p:20', 'u-mb:30'];
 
         let expected = [
-            '.u-p\:20 { padding: 20px; }',
-            '.u-mb\:30 { margin-bottom: 30px; }'
+            '.u-p\\:20 { padding: 20px; }',
+            '.u-mb\\:30 { margin-bottom: 30px; }'
         ];
 
         assert.deepEqual(expected, generate_css(parameters));
