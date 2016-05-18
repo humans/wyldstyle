@@ -1,4 +1,5 @@
 let filesystem = require('fs');
+let array_unique = require('./array_unique');
 
 /**
  * Extract out all the utility classes.
@@ -13,7 +14,12 @@ let extract_utilities = function (content) {
         return [];
     }
 
-    return content.match(pattern);
+    // Unique and storted.
+    let matches = array_unique(content.match(pattern)).sort();
+
+    return matches.map((selector) => {
+        return selector.trim();
+    });
 }
 
 /**

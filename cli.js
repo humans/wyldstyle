@@ -11,16 +11,6 @@ function array_merge_distinct(array1, array2) {
     });
 }
 
-function match_utilities(data) {
-    let pattern = /(u-[A-Za-z0-9\:\@]+)\s/g;
-
-    if (typeof data == 'undefined') {
-        return null;
-    }
-
-    return data.match(pattern);
-}
-
 function cache_utiltiies(cache, data) {
     let matches = match_utilities(data);
 
