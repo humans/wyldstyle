@@ -1,0 +1,30 @@
+{
+  "name": "escss",
+  "version": "0.0.0",
+  "description": "Emmet based CSS utility generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaggy/escss.git"
+  },
+  "keywords": [
+    "css",
+    "emmet",
+    "sass",
+    "stylus",
+    "scss",
+    "style"
+  ],
+  "author": "Jaggy Gauran <i.am@jag.gy>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jaggy/escss/issues"
+  },
+  "homepage": "https://github.com/jaggy/escss#readme",
+  "dependencies": {
+    "chokidar": "^1.5.0"
+  }
+}
