@@ -15,7 +15,7 @@ try {
 }
 
 
-if (! has_config  && process.argv.length != 4) {
+if (! has_config  && process.argv.length < 4) {
     console.log('Usage: wyldstyle <directory> <output> [--config=<wyldstyle.json>]');
 
     process.exit();
@@ -23,8 +23,8 @@ if (! has_config  && process.argv.length != 4) {
 
 if (! has_config) {
     config = {
-        directory: process.argv[2],
-        output: process.argv[3],
+        directory: process.argv.slice(2, -1),
+        output: process.argv.slice(-1)[0],
     }
 }
 
