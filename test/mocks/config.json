@@ -1,0 +1,4 @@
+{
+    "directory": "tests/mocks",
+    "output": "tests/mocks/lucy.styl"
+}
