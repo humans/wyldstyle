@@ -40,3 +40,5 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
+# Test file for the compiled css.
+lucy.css

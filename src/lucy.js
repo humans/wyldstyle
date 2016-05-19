@@ -23,7 +23,7 @@ module.exports = function (options) {
             filesystem.writeFile(options.output, cache.join("\n"), (error) => {
                 if (error) { return console.log(err); }
 
-                console.log(`File saved on ${__dirname}`);
+                console.log(`File saved on ${options.output}`);
             });
         });
     });

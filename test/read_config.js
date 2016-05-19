@@ -12,4 +12,3 @@ describe('#read_config', () => {
 
         assert.deepEqual(expected, config);
     });
-});
