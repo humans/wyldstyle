@@ -6,7 +6,7 @@ let generate_css      = require('./generate_css');
 
 // Ignore the dotfiles.
 let config = { ignored: /[\/\\]\./, }
-let cache  = [];
+let cache  = {};
 
 module.exports = function (options) {
     chokidar.watch(options.directory, config).on('all', (event, filename) => {
@@ -17,10 +17,17 @@ module.exports = function (options) {
 
             let utilities = extract_utilities(data);
             let styles    = generate_css(utilities);
+            let compiled  = [];
 
-            cache = array_unique(cache.concat(styles)).sort();
+            cache[filename] = styles;
 
-            filesystem.writeFile(options.output, cache.join("\n"), (error) => {
+            for (let index in cache) {
+                compiled = compiled.concat(cache[index]);
+            }
+
+            compiled = array_unique(compiled).sort();
+
+            filesystem.writeFile(options.output, compiled.join("\n"), (error) => {
                 if (error) { return console.log(err); }
 
                 console.log(`File saved on ${options.output}`);
