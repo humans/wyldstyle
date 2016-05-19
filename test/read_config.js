@@ -7,8 +7,9 @@ describe('#read_config', () => {
 
         var expected = {
             directory: "tests/mocks",
-            output:    "tests/mocks/lucy.styl",
+            output:    "tests/mocks/wyldstyle.styl"
         };
 
         assert.deepEqual(expected, config);
     });
+});
