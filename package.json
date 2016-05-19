@@ -1,8 +1,11 @@
 {
   "name": "wildstyle",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Emmet based CSS utility generator",
-  "main": "cli.js",
+  "main": "index.js",
+  "bin": {
+    "wildstyle": "bin/wildstyle.js"
+  },
   "scripts": {
     "test": "mocha test"
   },
