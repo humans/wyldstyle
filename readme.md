@@ -1,4 +1,4 @@
-# Wild Style? Lucy?
+# Wyldstyle
 
 # Todo
 - [ ] Logo?

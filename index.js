@@ -1,11 +1,11 @@
 let filesystem = require('fs');
-let lucy = require('./src/lucy');
+let wyldstyle = require('./src/wyldstyle');
 let read_config = require('./src/read_config');
 let config = {};
 let has_config = true;
 
 try {
-    let path = './lucy.json';
+    let path = './wyldstyle.json';
 
     filesystem.accessSync(path, fs.F_OK)
 
@@ -16,7 +16,7 @@ try {
 
 
 if (! has_config  && process.argv.length != 4) {
-    console.log('Usage: lucy <directory> <output> [--config=<lucy.json>]');
+    console.log('Usage: wyldstyle <directory> <output> [--config=<wyldstyle.json>]');
 
     process.exit();
 }
@@ -29,4 +29,4 @@ if (! has_config) {
 }
 
 
-lucy(config);
+wyldstyle(config);
