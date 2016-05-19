@@ -23,7 +23,7 @@ chokidar.watch(directory, config).on('all', (event, filename) => {
         let utilities = extract_utilities(data);
         let styles = generate_css(utilities);
 
-        cache = array_unique(cache.concat(styles));
+        cache = array_unique(cache.concat(styles)).sort();
 
         console.log(cache.join("\n"));
     });
