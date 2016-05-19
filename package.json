@@ -1,14 +1,14 @@
 {
-  "name": "escss",
-  "version": "0.2.0",
+  "name": "wildstyle",
+  "version": "0.2.1",
   "description": "Emmet based CSS utility generator",
-  "main": "index.js",
+  "main": "cli.js",
   "scripts": {
     "test": "mocha test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaggy/escss.git"
+    "url": "git+https://github.com/jaggy/wildstyle.git"
   },
   "keywords": [
     "css",
@@ -21,9 +21,9 @@
   "author": "Jaggy Gauran <i.am@jag.gy>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jaggy/escss/issues"
+    "url": "https://github.com/jaggy/wildstyle/issues"
   },
-  "homepage": "https://github.com/jaggy/escss#readme",
+  "homepage": "https://github.com/jaggy/wildstyle#readme",
   "dependencies": {
     "chokidar": "^1.5.0",
     "emmet": "^1.3.2"
