@@ -3,17 +3,18 @@ let chokidar          = require('chokidar');
 let array_unique      = require('./array_unique');
 let extract_utilities = require('./extract_utilities');
 let generate_css      = require('./generate_css');
+let Cache = require('./Cache');
 
-// Ignore the dotfiles.
+let cache  = new Cache;
 let config = {
-    ignored: /^(\.|.+\.(css|[sl][eca]ss|styl))/,
+    ignored: /^(\.|.+\.([sl]*[aec]ss|styl))$/, // css, less, scss, sass, styl
 };
-let cache  = {};
 
 module.exports = function (options) {
     chokidar.watch(options.directory, config).on('all', (event, filename) => {
         console.log(event, filename);
 
+        // Read the file
         filesystem.readFile(filename, 'utf8', (error, data) => {
             if (error) { return; }
 
@@ -21,15 +22,10 @@ module.exports = function (options) {
             let styles    = generate_css(utilities);
             let compiled  = [];
 
-            cache[filename] = styles;
+            cache.push(filename, styles);
 
-            for (let index in cache) {
-                compiled = compiled.concat(cache[index]);
-            }
-
-            compiled = array_unique(compiled).sort();
-
-            filesystem.writeFile(options.output, compiled.join("\n"), (error) => {
+            // Write the file
+            filesystem.writeFile(options.output, cache.compile().join("\n"), (error) => {
                 if (error) { return console.log(error); }
 
                 console.log(`File saved on ${options.output}`);
