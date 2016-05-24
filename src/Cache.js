@@ -48,7 +48,15 @@ class Cache {
     compile() {
         let compiled = [];
 
-        return compiled;
+        for (let index in this.store) {
+            let cache = this.store[index];
+
+            compiled = compiled.concat(cache);
+        }
+
+        compiled.sort();
+
+        return array_unique(compiled);
     }
 }
 
