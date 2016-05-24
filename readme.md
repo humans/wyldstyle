@@ -8,7 +8,7 @@
 - [?] Add compatibility with task runners.
 - [x] Structure the application better.
 - [x] Add support for dot classes.
-- [ ] Extract the caching into it's own module for testability.
+- [x] Extract the caching into it's own module for testability.
 - [ ] Add responsive selectors.
 - [ ] Add breakponts on the config file.
 - [ ] Exapand more on the configurability through a json file.
