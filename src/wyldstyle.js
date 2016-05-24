@@ -30,7 +30,7 @@ module.exports = function (options) {
             compiled = array_unique(compiled).sort();
 
             filesystem.writeFile(options.output, compiled.join("\n"), (error) => {
-                if (error) { return console.log(err); }
+                if (error) { return console.log(error); }
 
                 console.log(`File saved on ${options.output}`);
             });
