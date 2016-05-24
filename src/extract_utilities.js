@@ -8,7 +8,7 @@ let array_unique = require('./array_unique');
  * @return {Array}
  */
 module.exports = function (content) {
-    let pattern = /(u-[A-Za-z0-9\:\@\!]+)\s/g;
+    let pattern = /(u-[A-Za-z0-9\:\@\!\.]+)\s/g;
 
     if (typeof content == 'undefined') {
         return [];

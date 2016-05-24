@@ -6,7 +6,7 @@ module.exports = function (utilities) {
     for (let utility of utilities) {
         let shorthand = utility.replace('u-', '');
         let expanded  = emmet.expandAbbreviation(shorthand, 'css');
-        let selector  = utility.replace(':', "\\:");
+        let selector  = utility.replace(':', "\\:").replace(".", "\\.");
 
         css.push(`.${selector} { ${expanded} }`);
     }
