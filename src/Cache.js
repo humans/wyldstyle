@@ -1,3 +1,5 @@
+var array_unique = require('./array_unique');
+
 class Cache {
     constructor() {
         this.store = {};
@@ -18,19 +20,15 @@ class Cache {
     /**
      * Push the value to the given key. Create the array when the key does not exist.
      * @param  {String} key
-     * @param  {mixed} value
+     * @param  {mixed} values
      * @return {void}
      */
-    push(key, value) {
+    push(key, values) {
         if (! this.has(key)) {
             this.store[key] = new Array;
         }
 
-        if (this.store[key].indexOf(value) > -1) {
-            return;
-        }
-
-        this.store[key].push(value)
+        this.store[key] = array_unique(this.store[key].concat(values));
         this.store[key].sort();
     }
 

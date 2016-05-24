@@ -11,28 +11,24 @@ describe('Cache', () => {
     it('stores the key and an array value of the cache', () => {
         let cache = new Cache();
 
-        cache.push('key', 'test');
+        cache.push('key', ['test']);
 
         assert.deepEqual(['test'], cache.get('key'));
     });
 
-    it('sorts the pushed arrays', () => {
+    it('sorts the values once stored', () => {
         let cache = new Cache();
 
-        cache.push('key', 'z');
-        cache.push('key', 'a');
-        cache.push('key', 'd');
+        cache.push('key', ['test', 'array']);
 
-        assert.deepEqual(['a', 'd', 'z'], cache.get('key'));
+        assert.deepEqual(['array', 'test'], cache.get('key'));
     });
 
-    it('does not store values already stores in the cache', () => {
+    it('does not store duplicate values', () => {
         let cache = new Cache();
 
-        cache.push('key', 'first');
-        cache.push('key', 'second');
-        cache.push('key', 'first');
+        cache.push('key', ['test', 'array', 'array']);
 
-        assert.deepEqual(['first', 'second'], cache.get('key'));
+        assert.deepEqual(['array', 'test'], cache.get('key'));
     });
 });
