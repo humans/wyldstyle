@@ -5,10 +5,12 @@ class Tachyons
     /**
      * Create a new tachyon extractor.
      * @param  {String} prefix
+     * @param  {Array} breakpoints
      * @return {Tachyons}
      */
-    constructor(prefix = 'u-') {
+    constructor(prefix = 'u-', breakpoints = []) {
         this.prefix = prefix;
+        this.breakpoints = breakpoints;
     }
 
     /**
@@ -29,9 +31,27 @@ class Tachyons
             return [];
         }
 
-        return Arr.unique(matches)
-                .sort()
-                .map(selector => selector.trim());
+        return this._segregateBreakpoints(matches);
+    }
+
+    /**
+     * Segregate the breakpoints.
+     * @param  {Array} matches
+     * @return {Object}
+     */
+    _segregateBreakpoints(matches) {
+        let tachyons = Arr.unique(matches).sort().map(selector => selector.trim());
+        let reference = {
+            css: tachyons.filter(tachyon => ! tachyon.includes('@'))
+        };
+
+        this.breakpoints.forEach(breakpoint => {
+            reference[breakpoint] = tachyons.filter(tachyon => {
+                return tachyon.includes(`@${breakpoint}`);
+            });
+        });
+
+        return reference;
     }
 }
 

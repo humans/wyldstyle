@@ -1,4 +1,5 @@
-var emmet = require('emmet');
+let emmet = require('emmet');
+
 class Builder
 {
     /**
