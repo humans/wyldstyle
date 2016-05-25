@@ -2,9 +2,10 @@ let filesystem = require('fs');
 let Watcher = require('./src/Watcher');
 let Config = require('./src/Config');
 
+let path = `${process.cwd()}/wyldstyle.json`;
 let usage = 'Usage: wyldstyle <directory> <output> [--config=<wyldstyle.json>]';
+let hasFileConfig = false;
 let fileConfig = {};
-let hasConfig = false;
 let cliConfig = { // Config from the cli argmuments
     directory: process.argv.slice(2, -1),
     output: process.argv.slice(-1)[0],
@@ -15,22 +16,23 @@ let cliConfig = { // Config from the cli argmuments
 // accessSync seems to throw an exception when the file does not exist sooo,
 // that pretty much sucks
 try {
-    let contents;
-    let path = `${process.cwd()}/wyldstyle.json`;
-
     filesystem.accessSync(path, fs.F_OK);
 
-    hasConfig = true;
+    hasFileConfig = true;
     fileConfig = JSON.parse(filesystem.readFileSync(path, 'utf8'));
 } catch (error) {}
 
-if (! hasConfig && process.argv.length < 4) {
+if (! hasFileConfig && process.argv.length < 4) {
     console.log(usage);
 
     process.exit();
 }
 
-let config = new Config(hasConfig ? fileConfig : cliConfig);
+if (hasFileConfig) {
+    console.log(`Wyldstyle config found: ${path}`);
+}
+
+let config = new Config(hasFileConfig ? fileConfig : cliConfig);
 let watcher = new Watcher(config.all());
 
 watcher.start();
