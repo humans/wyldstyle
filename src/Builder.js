@@ -13,7 +13,7 @@ class Builder
         let css = [];
 
         for (let utility of utilities) {
-            let shorthand = utility.replace('u-', '');
+            let shorthand = utility.replace(`${this.prefix}-`, '');
             let expanded  = emmet.expandAbbreviation(shorthand, 'css').replace("\\$", "$");
             let selector  = utility.replace(':', "\\:")
                                    .replace(".", "\\.")
