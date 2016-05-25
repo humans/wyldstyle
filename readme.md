@@ -9,6 +9,7 @@
 - [x] Structure the application better.
 - [x] Add support for dot classes.
 - [x] Extract the caching into it's own module for testability.
+- [ ] Refactor out to ES6.
 - [ ] Add responsive selectors.
-- [ ] Add breakponts on the config file.
-- [ ] Exapand more on the configurability through a json file.
+- [ ] Add breakpoints on the config file.
+- [ ] Expand more on the configurability through a JSON file.

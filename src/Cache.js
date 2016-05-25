@@ -1,4 +1,4 @@
-var array_unique = require('./array_unique');
+var Arr = require('./Arr');
 
 class Cache {
     constructor() {
@@ -28,7 +28,7 @@ class Cache {
             this.store[key] = new Array;
         }
 
-        this.store[key] = array_unique(this.store[key].concat(values));
+        this.store[key] = Arr.unique(this.store[key].concat(values));
         this.store[key].sort();
     }
 
@@ -56,7 +56,7 @@ class Cache {
 
         compiled.sort();
 
-        return array_unique(compiled);
+        return Arr.unique(compiled);
     }
 }
 

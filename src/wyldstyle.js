@@ -1,6 +1,5 @@
 let filesystem        = require('fs');
 let chokidar          = require('chokidar');
-let array_unique      = require('./array_unique');
 let extract_utilities = require('./extract_utilities');
 let generate_css      = require('./generate_css');
 let Cache = require('./Cache');

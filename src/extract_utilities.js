@@ -1,5 +1,5 @@
 let filesystem = require('fs');
-let array_unique = require('./array_unique');
+let Arr = require('./Arr');
 
 /**
  * Extract out all the utility classes.
@@ -20,7 +20,7 @@ module.exports = function (content) {
         return [];
     }
 
-    return array_unique(matches)
+    return Arr.unique(matches)
             .sort()
             .map((selector) => {
                 return selector.trim();
