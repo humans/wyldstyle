@@ -13,5 +13,6 @@
 - [ ] Add responsive selectors.
 - [x] Add breakpoints on the config file.
 - [x] Expand more on the configurability through a JSON file.
-- [ ] Add defaults for the config.
+- [x] Add defaults for the config.
 - [ ] Add dynamic breakpoints for the whole watcher.
+- [x] Use the config object as an injection rather than the json object.
