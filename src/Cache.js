@@ -58,6 +58,23 @@ class Cache {
 
         return Arr.unique(compiled);
     }
+
+    /**
+     * Build the css.
+     * @param  {String} wrapper = null
+     * @return {String}
+     */
+    stringify(wrapper = null) {
+        if (! wrapper) {
+            return this.compile().join("\n");
+        }
+
+        let indented = this.compile().map(style => `\t${style}`);
+
+        return `${wrapper} {
+${indented.join("\n")}
+}`;
+    }
 }
 
 module.exports = Cache;

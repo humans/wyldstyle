@@ -28,14 +28,14 @@ describe('Tachyons', () => {
             let undefined_variable;
             let tachyons = new Tachyons;
 
-            assert.deepEqual([], tachyons.extract(undefined_variable));
+            assert.deepEqual({ css: [] }, tachyons.extract(undefined_variable));
         });
 
         it('returns an empty array given a string without matches', () => {
             let non_matchable_html = '<html></html>';
             let tachyons = new Tachyons;
 
-            assert.deepEqual([], tachyons.extract(non_matchable_html));
+            assert.deepEqual({ css: [] }, tachyons.extract(non_matchable_html));
         });
     });
 });

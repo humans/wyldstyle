@@ -20,15 +20,18 @@ class Tachyons
      */
     extract(contents) {
         let pattern = new RegExp(`(${this.prefix}[A-Za-z0-9\\:\\@\\!\\.\\$]+)\\s`, 'g');
+        let defaults = { css: [] };
+
+        this.breakpoints.forEach(breakpoint => { defaults[breakpoint] = []; });
 
         if (typeof contents == 'undefined') {
-            return [];
+            return defaults;
         }
 
         let matches = contents.match(pattern);
 
         if (! matches) {
-            return [];
+            return defaults;
         }
 
         return this._segregateBreakpoints(matches);
