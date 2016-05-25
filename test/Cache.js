@@ -47,4 +47,38 @@ describe('Cache', () => {
             assert.deepEqual(['array', 'boolean', 'string', 'test'], cache.compile());
         });
     });
+
+    describe("#stringify", () => {
+        it("stringifies the compiled values", () => {
+            let cache = new Cache();
+
+            cache.push('key', ['test', 'array', 'array']);
+            cache.push('key2', ['test', 'object', 'boolean']);
+            cache.push('key2', ['string', 'boolean']);
+
+            let expected = `array
+boolean
+string
+test`;
+
+            assert.deepEqual(expected, cache.stringify());
+        });
+
+        it("wraps the given wrapper on the strings", () => {
+            let cache = new Cache;
+
+            cache.push('key', ['test', 'array', 'array']);
+            cache.push('key2', ['test', 'object', 'boolean']);
+            cache.push('key2', ['string', 'boolean']);
+
+            let expected = `@media (max-width: 35rem) {
+\tarray
+\tboolean
+\tstring
+\ttest
+}`;
+
+            assert.deepEqual(expected, cache.stringify('@media (max-width: 35rem)'));
+        });
+    });
 });

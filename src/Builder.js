@@ -1,4 +1,5 @@
-var emmet = require('emmet');
+let emmet = require('emmet');
+
 class Builder
 {
     /**
@@ -27,12 +28,14 @@ class Builder
         let css = [];
 
         for (let utility of utilities) {
-            let shorthand = utility.replace(`${this.prefix}`, '');
+            let shorthand = utility.replace(`${this.prefix}`, '')
+                                   .replace(/\@[0-9A-Za-z]+/g, '');
             let expanded  = emmet.expandAbbreviation(shorthand, 'css').replace("\\$", "$");
             let selector  = utility.replace(':', "\\:")
-                                   .replace(".", "\\.")
-                                   .replace("$", "\\$")
-                                   .replace("!", "\\!");
+                                   .replace('.', "\\.")
+                                   .replace('$', "\\$")
+                                   .replace('!', "\\!")
+                                   .replace('@', "\\@");
 
             css.push(`.${selector} { ${expanded} }`);
         }
