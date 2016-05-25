@@ -44,7 +44,7 @@ describe('Cache', () => {
             cache.push('key2', ['test', 'object', 'boolean']);
             cache.push('key2', ['string', 'boolean']);
 
-            assert.deepEqual(['array', 'boolean', 'object', 'string', 'test'], cache.compile());
+            assert.deepEqual(['array', 'boolean', 'string', 'test'], cache.compile());
         });
     });
 });
