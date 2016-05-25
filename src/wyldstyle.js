@@ -1,11 +1,13 @@
-let filesystem        = require('fs');
-let chokidar          = require('chokidar');
-let array_unique      = require('./array_unique');
-let extract_utilities = require('./extract_utilities');
-let generate_css      = require('./generate_css');
-let Cache = require('./Cache');
+let filesystem = require('fs');
+let chokidar   = require('chokidar');
+let Builder    = require('./Builder');
+let Tachyons   = require('./Tachyons');
+let Cache      = require('./Cache');
 
-let cache  = new Cache;
+let builder  = new Builder;
+let tachyons = new Tachyons;
+let cache    = new Cache;
+
 let config = {
     ignored: /^(\.|.+\.([sl]*[aec]ss|styl))$/, // css, less, scss, sass, styl
 };
@@ -18,9 +20,8 @@ module.exports = function (options) {
         filesystem.readFile(filename, 'utf8', (error, data) => {
             if (error) { return; }
 
-            let utilities = extract_utilities(data);
-            let styles    = generate_css(utilities);
-            let compiled  = [];
+            let utilities = tachyons.extract(data);
+            let styles    = builder.generateStyles(utilities);
 
             cache.push(filename, styles);
 
