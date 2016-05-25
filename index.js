@@ -33,6 +33,6 @@ if (hasFileConfig) {
 }
 
 let config = new Config(hasFileConfig ? fileConfig : cliConfig);
-let watcher = new Watcher(config.all());
+let watcher = new Watcher(config);
 
 watcher.start();

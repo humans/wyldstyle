@@ -8,14 +8,14 @@ class Watcher
 {
     /**
      * Create a new watcher.
-     * @param  {Object} options
+     * @param  {Config} config
      * @return {Watcher}
      */
-    constructor(options = {}) {
-        this.options  = options;
-        this.builder  = new Builder;
+    constructor(config) {
+        this.config   = config;
+        this.builder  = new Builder(config.get('prefix'));
+        this.tachyons = new Tachyons(config.get('prefix'));
         this.cache    = new Cache;
-        this.tachyons = new Tachyons;
     }
 
     /**
@@ -27,7 +27,7 @@ class Watcher
             ignored: /^(\.|.+\.([sl]*[aec]ss|styl))$/, // css, less, scss, sass, styl
         };
 
-        chokidar.watch(this.options.directory, watcherConfig).on('all', (event, filename) => {
+        chokidar.watch(this.config.get('directory'), watcherConfig).on('all', (event, filename) => {
             console.log(event, filename);
 
             // Read the file
@@ -43,12 +43,12 @@ class Watcher
 
                 // Write the file
                 filesystem.writeFile(
-                    this.options.output,
+                    this.config.get('output'),
                     this.cache.compile().join("\n"),
                     (error) => {
                         if (error) { return console.log(error); }
 
-                        console.log(`File saved on ${this.options.output}`);
+                        console.log(`File saved on ${this.config.get('output')}`);
                     }
                 );
             });
