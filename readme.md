@@ -10,9 +10,10 @@
 - [x] Add support for dot classes.
 - [x] Extract the caching into it's own module for testability.
 - [x] Refactor out to ES6.
-- [ ] Add responsive selectors.
+- [x] Add responsive selectors.
 - [x] Add breakpoints on the config file.
 - [x] Expand more on the configurability through a JSON file.
 - [x] Add defaults for the config.
-- [ ] Add dynamic breakpoints for the whole watcher.
+- [x] Add dynamic breakpoints for the whole watcher.
 - [x] Use the config object as an injection rather than the json object.
+- [ ] ! Refactor out the caching logic since the wrapper solution is just a quick hack.
