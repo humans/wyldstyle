@@ -1,4 +1,9 @@
 {
+    "breakpoints": {
+        "s": "1rem",
+        "m": "2rem",
+        "l": "3rem"
+    },
     "directory": "tests/mocks",
     "output": "tests/mocks/wyldstyle.styl"
 }
