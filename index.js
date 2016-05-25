@@ -10,6 +10,12 @@ let cliConfig = { // Config from the cli argmuments
     directory: process.argv.slice(2, -1),
     output: process.argv.slice(-1)[0],
 };
+let defaults = {
+    prefix:      'u-',
+    breakpoints: {},
+    directory:   null,
+    output:      null,
+};
 
 // Let's see if the file exists.
 //
