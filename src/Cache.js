@@ -28,7 +28,7 @@ class Cache {
             this.store[key] = new Array;
         }
 
-        this.store[key] = Arr.unique(this.store[key].concat(values));
+        this.store[key] = Arr.unique(values);
         this.store[key].sort();
     }
 

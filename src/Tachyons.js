@@ -3,7 +3,7 @@ let Arr = require('./Arr');
 class Tachyons
 {
     extract(contents) {
-        let pattern = /(u-[A-Za-z0-9\:\@\!\.]+)\s/g;
+        let pattern = /(u-[A-Za-z0-9\:\@\!\.\$]+)\s/g;
 
         if (typeof contents == 'undefined') {
             return [];
