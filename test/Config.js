@@ -4,8 +4,15 @@ var Config  = require('../src/Config');
 describe("Config", () => {
     describe("#load", () => {
         it("reads the json config file", () => {
-            let config = new Config;
-            config.load(`${__dirname}/mocks/config.json`);
+            let config = new Config({
+                "breakpoints": {
+                    "s": "1rem",
+                    "m": "2rem",
+                    "l": "3rem"
+                },
+                "directory": "tests/mocks",
+                "output": "tests/mocks/wyldstyle.styl"
+            });
 
             var expected = {
                 breakpoints: {
@@ -23,8 +30,15 @@ describe("Config", () => {
 
     describe("#get", () => {
         it("returns the key of the given config", () => {
-            let config = new Config;
-            config.load(`${__dirname}/mocks/config.json`);
+            let config = new Config({
+                "breakpoints": {
+                    "s": "1rem",
+                    "m": "2rem",
+                    "l": "3rem"
+                },
+                "directory": "tests/mocks",
+                "output": "tests/mocks/wyldstyle.styl"
+            });
 
             let expected = {
                 s: "1rem",
