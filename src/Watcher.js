@@ -14,8 +14,8 @@ class Watcher
     constructor(config) {
         this.config   = config;
         this.builder  = new Builder(config.get('prefix'));
+        this.tachyons = new Tachyons(config.get('prefix'));
         this.cache    = new Cache;
-        this.tachyons = new Tachyons;
     }
 
     /**

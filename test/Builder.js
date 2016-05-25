@@ -6,7 +6,7 @@ describe("Builder", () => {
         it("sets the prefix", () => {
             let builder = new Builder;
 
-            assert.deepEqual('u', builder.getPrefix())
+            assert.deepEqual('u-', builder.getPrefix())
         });
 
         it("generates the css from the given utilities", () => {
