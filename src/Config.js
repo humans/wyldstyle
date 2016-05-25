@@ -7,7 +7,16 @@ class Config {
      * @return {Config}
      */
     constructor(config = {}) {
-        this.config = config;
+        let defaults = {
+            prefix:      'u-',
+            breakpoints: {},
+            directory:   null,
+            output:      null,
+        };
+
+        Object.assign(defaults, config);
+
+        this.config = defaults;
     }
 
     /**

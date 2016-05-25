@@ -1,19 +1,33 @@
 var emmet = require('emmet');
 class Builder
 {
-    constructor(prefix = 'u') {
+    /**
+     * Create a new builder.
+     * @param  {String} prefix
+     * @return {Builder}
+     */
+    constructor(prefix = 'u-') {
         this.prefix = prefix;
     }
 
+    /**
+     * Get the prefix.
+     * @return {String}
+     */
     getPrefix() {
         return this.prefix;
     }
 
+    /**
+     * Generate the css styles.
+     * @param  {Array} utilities
+     * @return {Array}
+     */
     generateStyles(utilities) {
         let css = [];
 
         for (let utility of utilities) {
-            let shorthand = utility.replace(`${this.prefix}-`, '');
+            let shorthand = utility.replace(`${this.prefix}`, '');
             let expanded  = emmet.expandAbbreviation(shorthand, 'css').replace("\\$", "$");
             let selector  = utility.replace(':', "\\:")
                                    .replace(".", "\\.")
