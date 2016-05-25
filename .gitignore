@@ -40,5 +40,6 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-# Test file for the compiled css.
+# Project specific scheisse.
 lucy.css
+wyldstyle.json
