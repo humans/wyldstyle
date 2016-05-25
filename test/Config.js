@@ -2,6 +2,14 @@ var assert = require('chai').assert;
 var Config  = require('../src/Config');
 
 describe("Config", () => {
+    describe("constructor", () => {
+        it("loads defaults given unset attributes", () => {
+            let config = new Config;
+
+            assert.deepEqual('u-', config.get('prefix'));
+        });
+    });
+
     describe("#load", () => {
         it("reads the json config file", () => {
             let config = new Config({
@@ -21,7 +29,8 @@ describe("Config", () => {
                     l: "3rem",
                 },
                 directory: "tests/mocks",
-                output:    "tests/mocks/wyldstyle.styl"
+                output:    "tests/mocks/wyldstyle.styl",
+                prefix:    "u-",
             };
 
             assert.deepEqual(expected, config.all());
@@ -37,7 +46,7 @@ describe("Config", () => {
                     "l": "3rem"
                 },
                 "directory": "tests/mocks",
-                "output": "tests/mocks/wyldstyle.styl"
+                "output": "tests/mocks/wyldstyle.styl",
             });
 
             let expected = {
@@ -52,7 +61,7 @@ describe("Config", () => {
         it("returns null given a non-existent key", () => {
             let config = new Config;
 
-            assert.deepEqual(null, config.get('breakpoints'));
+            assert.deepEqual(null, config.get('non-existent'));
         });
     });
 });
