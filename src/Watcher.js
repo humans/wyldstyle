@@ -12,10 +12,12 @@ class Watcher
      * @return {Watcher}
      */
     constructor(config) {
+        let breakpoints = Object.keys(config.get('breakpoints'));
+
         this.config   = config;
         this.builder  = new Builder(config.get('prefix'));
-        this.tachyons = new Tachyons(config.get('prefix'));
-        this.cache    = new Cache;
+        this.tachyons = new Tachyons(config.get('prefix'), breakpoints);
+        this.cache    = this._setCacheStores(breakpoints);
     }
 
     /**
@@ -23,6 +25,9 @@ class Watcher
      * @return {void}
      */
     start() {
+        let breakpoints = Object.keys(this.config.get('breakpoints'));
+        breakpoints.unshift('css');
+
         let watcherConfig = {
             ignored: /^(\.|.+\.([sl]*[aec]ss|styl))$/, // css, less, scss, sass, styl
         };
@@ -34,25 +39,43 @@ class Watcher
             filesystem.readFile(filename, 'utf8', (error, data) => {
                 if (error) { return; }
 
-                let utilities = this.tachyons.extract(data);
+                let compiled = [];
+                let tachyons = this.tachyons.extract(data);
 
-                this.cache.push(
-                    filename,
-                    this.builder.generateStyles(utilities)
-                );
+                // this.cache.css.push(filename, this.builder.generateStyles(tachyons.css));
+                breakpoints.forEach((breakpoint) => {
+                    let wrapper = null;
+                    let metric  = this.config.get('breakpoints')[breakpoint];
+
+                    this.cache[breakpoint].push(
+                        filename,
+                        this.builder.generateStyles(tachyons[breakpoint])
+                    );
+
+                    if (breakpoint != 'css') {
+                        wrapper = `@media (max-width: ${metric})`;
+                    }
+
+                    compiled.push(this.cache[breakpoint].stringify(wrapper));
+                });
 
                 // Write the file
-                filesystem.writeFile(
-                    this.config.get('output'),
-                    this.cache.compile().join("\n"),
-                    (error) => {
-                        if (error) { return console.log(error); }
+                filesystem.writeFile(this.config.get('output'), compiled.join("\n\n"), (error) => {
+                    if (error) { return console.log(error); }
 
-                        console.log(`File saved on ${this.config.get('output')}`);
-                    }
-                );
+                    console.log(`File saved on ${this.config.get('output')}`);
+                });
+
             });
         });
+    }
+
+    _setCacheStores(breakpoints) {
+        let cache = { css: new Cache };
+
+        breakpoints.forEach((breakpoint) => { cache[breakpoint] = new Cache });
+
+        return cache;
     }
 }
 

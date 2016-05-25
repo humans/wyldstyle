@@ -20,5 +20,17 @@ describe("Builder", () => {
 
             assert.deepEqual(expected, builder.generateStyles(parameters));
         });
+
+        it("generates the css removing the media queries", () => {
+            let builder = new Builder;
+            let parameters = ['u-p:20@m', 'u-mb:30@m'];
+
+            let expected = [
+                '.u-p\\:20\\@m { padding: 20px; }',
+                '.u-mb\\:30\\@m { margin-bottom: 30px; }'
+            ];
+
+            assert.deepEqual(expected, builder.generateStyles(parameters));
+        });
     });
 });
