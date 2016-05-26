@@ -1,10 +1,19 @@
 let { assert } = require('chai');
 let Tachyons = require('../src/Tachyons');
+let Config = require('../src/Config');
 
 describe('Tachyons', () => {
     describe('#extract', () => {
         it('extracts out the utility classes from the given file content', () => {
-            let tachyons = new Tachyons('u-', ['s', 'm', 'l']);
+            let config = new Config({
+                prefix: 'u-',
+                breakpoints: {
+                    s: '1rem',
+                    m: '2rem',
+                    l: '3rem',
+                }
+            });
+            let tachyons = new Tachyons({ config: config });
             let html = `
             <article class="article [ u-p:20 ]">
                 <h1 class="article__title [ u-mb:24 u-fz:18 u-fz:22@m ]">Hello</h1>
@@ -26,16 +35,44 @@ describe('Tachyons', () => {
 
         it('returns an empty array given that the data is undefined', () => {
             let undefined_variable;
-            let tachyons = new Tachyons;
+            let config = new Config({
+                prefix: 'u-',
+                breakpoints: {
+                    s: '1rem',
+                    m: '2rem',
+                    l: '3rem',
+                }
+            });
+            let tachyons = new Tachyons({ config: config });
+            let expected = {
+                css: [],
+                s: [],
+                m: [],
+                l: [],
+            }
 
-            assert.deepEqual({ css: [] }, tachyons.extract(undefined_variable));
+            assert.deepEqual(expected, tachyons.extract(undefined_variable));
         });
 
         it('returns an empty array given a string without matches', () => {
             let non_matchable_html = '<html></html>';
-            let tachyons = new Tachyons;
+            let config = new Config({
+                prefix: 'u-',
+                breakpoints: {
+                    s: '1rem',
+                    m: '2rem',
+                    l: '3rem',
+                }
+            });
+            let tachyons = new Tachyons({ config: config });
+            let expected = {
+                css: [],
+                s: [],
+                m: [],
+                l: [],
+            }
 
-            assert.deepEqual({ css: [] }, tachyons.extract(non_matchable_html));
+            assert.deepEqual(expected, tachyons.extract(non_matchable_html));
         });
     });
 });

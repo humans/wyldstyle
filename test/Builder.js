@@ -1,16 +1,20 @@
 let { assert } = require('chai');
 let Builder = require('../src/Builder');
+let Config = require('../src/Config');
+let emmet = require('emmet');
 
 describe("Builder", () => {
     describe("#build", () => {
         it("sets the prefix", () => {
-            let builder = new Builder;
+            let config = new Config({ prefix: 'u-' });
+            let builder = new Builder({ emmet: emmet, config: config });
 
             assert.deepEqual('u-', builder.getPrefix())
         });
 
         it("generates the css from the given utilities", () => {
-            let builder = new Builder;
+            let config = new Config({ prefix: 'u-' });
+            let builder = new Builder({ emmet: emmet, config: config });
             let parameters = ['u-p:20', 'u-mb:30'];
 
             let expected = [
@@ -22,7 +26,8 @@ describe("Builder", () => {
         });
 
         it("generates the css removing the media queries", () => {
-            let builder = new Builder;
+            let config = new Config({ prefix: 'u-' });
+            let builder = new Builder({ emmet: emmet, config: config });
             let parameters = ['u-p:20@m', 'u-mb:30@m'];
 
             let expected = [

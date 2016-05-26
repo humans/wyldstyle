@@ -1,14 +1,12 @@
-let emmet = require('emmet');
-
 class Builder
 {
     /**
      * Create a new builder.
-     * @param  {String} prefix
+     * @param  {Object} app
      * @return {Builder}
      */
-    constructor(prefix = 'u-') {
-        this.prefix = prefix;
+    constructor(app) {
+        this.app = app;
     }
 
     /**
@@ -16,7 +14,7 @@ class Builder
      * @return {String}
      */
     getPrefix() {
-        return this.prefix;
+        return this.app.config.get('prefix');
     }
 
     /**
@@ -26,16 +24,20 @@ class Builder
      */
     generateStyles(utilities) {
         let css = [];
+        let prefix = this.app.config.get('prefix');
+        let syntax = this.app.config.get('emmet').syntax;
 
         for (let utility of utilities) {
-            let shorthand = utility.replace(`${this.prefix}`, '')
+            let shorthand = utility.replace(`${prefix}`, '')
                                    .replace(/\@[0-9A-Za-z]+/g, '');
-            let expanded  = emmet.expandAbbreviation(shorthand, 'css').replace("\\$", "$");
-            let selector  = utility.replace(':', "\\:")
-                                   .replace('.', "\\.")
-                                   .replace('$', "\\$")
-                                   .replace('!', "\\!")
-                                   .replace('@', "\\@");
+            let selector = utility.replace(':', "\\:")
+                                  .replace('.', "\\.")
+                                  .replace('$', "\\$")
+                                  .replace('!', "\\!")
+                                  .replace('@', "\\@");
+            let expanded = this.app.emmet
+                               .expandAbbreviation(shorthand, syntax)
+                               .replace("\\$", "$");
 
             css.push(`.${selector} { ${expanded} }`);
         }
