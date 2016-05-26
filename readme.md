@@ -17,4 +17,4 @@
 - [x] Add dynamic breakpoints for the whole watcher.
 - [x] Use the config object as an injection rather than the json object.
 - [ ] ! Refactor out the caching logic since the wrapper solution is just a quick hack.
-- [z] Create a config for emmet for both preferences and snippets.
+- [x] Create a config for emmet for both preferences and snippets.
