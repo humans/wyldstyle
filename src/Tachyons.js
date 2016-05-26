@@ -4,13 +4,13 @@ class Tachyons
 {
     /**
      * Create a new tachyon extractor.
-     * @param  {String} prefix
-     * @param  {Array} breakpoints
+     * @param  {Object} app
      * @return {Tachyons}
      */
-    constructor(prefix = 'u-', breakpoints = []) {
-        this.prefix = prefix;
-        this.breakpoints = breakpoints;
+    constructor(app) {
+        this.app = app;
+
+        this.breakpoints = Object.keys(app.config.get('breakpoints'));
     }
 
     /**
@@ -19,7 +19,8 @@ class Tachyons
      * @return {Array}
      */
     extract(contents) {
-        let pattern = new RegExp(`(${this.prefix}[A-Za-z0-9\\:\\@\\!\\.\\$]+)\\s`, 'g');
+        let prefix = this.app.config.get('prefix');
+        let pattern = new RegExp(`(${prefix}[A-Za-z0-9\\:\\@\\!\\.\\$]+)\\s`, 'g');
         let defaults = { css: [] };
 
         this.breakpoints.forEach(breakpoint => { defaults[breakpoint] = []; });

@@ -1,23 +1,21 @@
 let filesystem = require('fs');
-let chokidar   = require('chokidar');
-let Builder    = require('./Builder');
-let Tachyons   = require('./Tachyons');
-let Cache      = require('./Cache');
+let chokidar = require('chokidar');
+let Builder = require('./Builder');
+let Tachyons = require('./Tachyons');
+let Cache = require('./Cache');
 
 class Watcher
 {
     /**
      * Create a new watcher.
-     * @param  {Config} config
+     * @param  {Object} app
      * @return {Watcher}
      */
-    constructor(config) {
-        let breakpoints = Object.keys(config.get('breakpoints'));
-
-        this.config   = config;
-        this.builder  = new Builder(config.get('prefix'));
-        this.tachyons = new Tachyons(config.get('prefix'), breakpoints);
-        this.cache    = this._setCacheStores(breakpoints);
+    constructor(app) {
+        this.app      = app;
+        this.builder  = new Builder(app);
+        this.tachyons = new Tachyons(app);
+        this.cache    = this._setCacheStores();
     }
 
     /**
@@ -25,14 +23,14 @@ class Watcher
      * @return {void}
      */
     start() {
-        let breakpoints = Object.keys(this.config.get('breakpoints'));
+        let breakpoints = Object.keys(this.app.config.get('breakpoints'));
         breakpoints.unshift('css');
 
         let watcherConfig = {
             ignored: /^(\.|.+\.([sl]*[aec]ss|styl))$/, // css, less, scss, sass, styl
         };
 
-        chokidar.watch(this.config.get('directory'), watcherConfig).on('all', (event, filename) => {
+        chokidar.watch(this.app.config.get('directory'), watcherConfig).on('all', (event, filename) => {
             console.log(event, filename);
 
             // Read the file
@@ -45,7 +43,7 @@ class Watcher
                 // this.cache.css.push(filename, this.builder.generateStyles(tachyons.css));
                 breakpoints.forEach((breakpoint) => {
                     let wrapper = null;
-                    let metric  = this.config.get('breakpoints')[breakpoint];
+                    let metric  = this.app.config.get('breakpoints')[breakpoint];
 
                     this.cache[breakpoint].push(
                         filename,
@@ -60,18 +58,19 @@ class Watcher
                 });
 
                 // Write the file
-                filesystem.writeFile(this.config.get('output'), compiled.join("\n\n"), (error) => {
+                filesystem.writeFile(this.app.config.get('output'), compiled.join("\n\n"), (error) => {
                     if (error) { return console.log(error); }
 
-                    console.log(`File saved on ${this.config.get('output')}`);
+                    console.log(`File saved on ${this.app.config.get('output')}`);
                 });
 
             });
         });
     }
 
-    _setCacheStores(breakpoints) {
+    _setCacheStores() {
         let cache = { css: new Cache };
+        let breakpoints = Object.keys(this.app.config.get('breakpoints'));
 
         breakpoints.forEach((breakpoint) => { cache[breakpoint] = new Cache });
 
