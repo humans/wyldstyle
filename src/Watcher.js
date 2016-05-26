@@ -51,7 +51,7 @@ class Watcher
                     );
 
                     if (breakpoint != 'css') {
-                        wrapper = `@media (max-width: ${metric})`;
+                        wrapper = `@media (min-width: ${metric})`;
                     }
 
                     compiled.push(this.cache[breakpoint].stringify(wrapper));
