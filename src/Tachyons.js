@@ -20,7 +20,7 @@ class Tachyons
      */
     extract(contents) {
         let prefix = this.app.config.get('prefix');
-        let pattern = new RegExp(`(${prefix}[A-Za-z0-9\\-\\:\\@\\!\\.\\$]+)\\s`, 'g');
+        let pattern = new RegExp(`(${prefix}[A-Za-z0-9\\-\\:\\@\\!\\.\\$]+)[\\s'"]`, 'g');
         let defaults = { css: [] };
 
         this.breakpoints.forEach(breakpoint => { defaults[breakpoint] = []; });
@@ -44,7 +44,7 @@ class Tachyons
      * @return {Object}
      */
     _segregateBreakpoints(matches) {
-        let tachyons = Arr.unique(matches).sort().map(selector => selector.trim());
+        let tachyons = Arr.unique(matches).sort().map(selector =>  selector.trim().replace(/['"]+$/, '') );
         let reference = {
             css: tachyons.filter(tachyon => ! tachyon.includes('@'))
         };

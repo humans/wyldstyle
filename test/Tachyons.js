@@ -33,6 +33,25 @@ describe('Tachyons', () => {
             assert.deepEqual(expected, tachyons.extract(html));
         });
 
+        it("extracts out the utilities inside quotes", () => {
+            let config = new Config({
+                prefix: 'u-',
+            });
+            let tachyons = new Tachyons({ config: config });
+            let html = `
+            <article class="u-p:20 u-m:22">
+                <article class='u-p:21 u-m:23'>
+                </article>
+            </article>
+            `;
+
+            let expected = {
+                css: ['u-m:22', 'u-m:23', 'u-p:20', 'u-p:21'],
+            }
+
+            assert.deepEqual(expected, tachyons.extract(html));
+        });
+
         it('returns an empty array given that the data is undefined', () => {
             let undefined_variable;
             let config = new Config({
