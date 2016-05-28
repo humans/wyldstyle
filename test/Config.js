@@ -32,7 +32,8 @@ describe("Config", () => {
                 output:    "tests/mocks/wyldstyle.styl",
                 prefix:    "u-",
                 "emmet": {
-                    "syntax": "css"
+                    "syntax": "css",
+                    "snippets": {}
                 },
                 "source": null
             };

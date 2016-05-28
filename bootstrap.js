@@ -23,6 +23,9 @@ try {
 } catch (error) {}
 
 emmet.loadPreferences(options.emmet.preferences);
+emmet.loadSnippets({
+    "css": { "snippets": options.emmet.snippets }
+});
 
 module.exports = {
     config: new Config(options, source),
