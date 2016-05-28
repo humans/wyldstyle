@@ -19,3 +19,5 @@
 - [ ] Refactor out the caching logic since the wrapper solution is just a quick hack.
 - [ ] Create a wrapper class to handle the responsive content strings.
 - [x] Create a config for emmet for both preferences and snippets.
+- [x] Create custom snippets on the json config.
+- [ ] Add an option to set hover states with `@h`.

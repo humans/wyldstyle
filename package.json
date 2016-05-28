@@ -1,6 +1,6 @@
 {
   "name": "wyldstyle",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "Emmet based CSS utility generator",
   "main": "index.js",
   "bin": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaggy/wyldstyle.git"
+    "url": "git+https://github.com/wyldstyle/wyldstyle.git"
   },
   "keywords": [
     "css",
@@ -25,9 +25,9 @@
   "author": "Jaggy Gauran <i.am@jag.gy>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jaggy/wyldstyle/issues"
+    "url": "https://github.com/wyldstyle/wyldstyle/issues"
   },
-  "homepage": "https://github.com/jaggy/wyldstyle#readme",
+  "homepage": "https://github.com/wyldstyle/wyldstyle#readme",
   "dependencies": {
     "chokidar": "^1.5.0",
     "emmet": "^1.3.2"
