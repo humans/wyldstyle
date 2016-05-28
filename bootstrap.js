@@ -2,9 +2,14 @@ let emmet = require('emmet');
 let filesystem = require('fs');
 let Config = require('./src/Config');
 
+/**
+ * Extract the flags from the cli args.
+ * @param  {Array} args
+ * @return {Object}
+ */
 function extract_flags(args)
 {
-    let allowed_flags = ['--ignore', '-i'];
+    let allowed_flags = ['--ignore', '-i', '--output', '-o'];
     let flags = {};
 
     for (flag of allowed_flags) {
@@ -13,7 +18,7 @@ function extract_flags(args)
         }
 
         let index = args.indexOf(flag);
-        let [key, value] = args.splice(index, index + 2); // +2 because the second is `up to`.
+        let [key, value] = args.splice(index, 2);
 
         flags[key] = value;
     }
@@ -25,11 +30,6 @@ let path = `${process.cwd()}/wyldstyle.json`;
 let source = 'cli';
 let args = process.argv;
 let flags = extract_flags(args);
-
-let options = { // Config from the cli argmuments
-    directory: args.slice(2, -1),
-    output: args.slice(-1)[0],
-};
 
 /**
  * Let's see if the file exists.
@@ -46,6 +46,11 @@ try {
 
 // Load the flags.
 options.flags = flags;
+options.directory = options.directory.concat(args.slice(2));
+
+if ('--output' in flags || '-o' in flags) {
+    options.output = flags['--output'] || flags['-o'];
+}
 
 emmet.loadPreferences(options.emmet.preferences);
 emmet.loadSnippets({
