@@ -13,7 +13,10 @@ class Config {
             breakpoints: {},
             directory: null,
             output: null,
-            emmet: { syntax: 'css' },
+            emmet: {
+                syntax: 'css',
+                "snippets": {}
+            },
         };
 
         Object.assign(defaults, config);
