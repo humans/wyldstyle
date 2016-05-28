@@ -24,3 +24,4 @@
 - [x] Add an option to ignore certain directories.
 - [x] Add the feature to select directories with the CLI and merge the preferences from the json file.
 - [x] Add the flag for the output rather than just the last parameter.
+- [ ] Refactor out the flag logic to it's own class.
