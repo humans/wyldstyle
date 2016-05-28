@@ -19,16 +19,30 @@ class Watcher
     }
 
     /**
+     * Create the regex for ignoring globs.
+     * @return {RegExp}
+     */
+    ignored_directories_regex() {
+        let flags = this.app.config.get('flags');
+        let ignore = '';
+
+        if (flags.hasOwnProperty('--ignore')) {
+            ignore = `${flags['--ignore']}|`;
+        }
+
+        return new RegExp(`^(${ignore}\.|.+\.([sl]*[aec]ss|styl))$`);
+    }
+
+    /**
      * Start the listener.
      * @return {void}
      */
     start() {
+        let pattern = this.ignored_directories_regex();
         let breakpoints = Object.keys(this.app.config.get('breakpoints'));
         breakpoints.unshift('css');
 
-        let watcherConfig = {
-            ignored: /^(\.|.+\.([sl]*[aec]ss|styl))$/, // css, less, scss, sass, styl
-        };
+        let watcherConfig = { ignored: pattern };
 
         chokidar.watch(this.app.config.get('directory'), watcherConfig).on('all', (event, filename) => {
             console.log(event, filename);
