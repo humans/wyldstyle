@@ -21,3 +21,5 @@
 - [x] Create a config for emmet for both preferences and snippets.
 - [x] Create custom snippets on the json config.
 - [ ] Add an option to set hover states with `@h`.
+- [ ] Add an option to ignore certain directories.
+- [ ] Add the feature to select directories with the CLI and merge the preferences from the json file.
