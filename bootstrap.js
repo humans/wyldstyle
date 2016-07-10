@@ -54,7 +54,7 @@ function extract_boolean_flags (args)
     return flags;
 }
 
-let options = {
+let defaults = {
     prefix: 'u-',
     breakpoints: {},
     directory: [],
@@ -78,7 +78,10 @@ try {
     filesystem.accessSync(path, fs.F_OK);
 
     options = JSON.parse(filesystem.readFileSync(path, 'utf8'));
-} catch (error) {}
+    options = Object.assign(defaults, options);
+} catch (error) {
+    options = defaults;
+}
 
 // Load the flags.
 options.flags = flags;

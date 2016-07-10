@@ -10,8 +10,4 @@ if (app.config.get('directory').length == 0) {
 
 let flags = app.config.get('flags');
 
-if (flags['--watch']) {
-    (new Watcher(app)).start();
-} else {
-
-}
+(new Watcher(app)).start();
