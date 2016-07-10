@@ -30,12 +30,6 @@ describe("Config", () => {
                 },
                 directory: "tests/mocks",
                 output:    "tests/mocks/wyldstyle.styl",
-                prefix:    "u-",
-                "emmet": {
-                    "syntax": "css",
-                    "snippets": {}
-                },
-                "source": null
             };
 
             assert.deepEqual(expected, config.all());
