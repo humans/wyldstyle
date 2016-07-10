@@ -1,5 +1,9 @@
 # Wyldstyle
 
+~~~bash
+$ ws directory1 file1.html directory2 --watch --output _utilities.scss
+~~~
+
 # Todo
 - [ ] Logo?
 - [ ] Documentation?
