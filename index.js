@@ -8,8 +8,10 @@ if (app.config.get('directory').length == 0) {
     process.exit();
 }
 
-console.log(`Wyldstyle config: ${app.config.get('source')}`);
+let flags = app.config.get('flags');
 
-let watcher = new Watcher(app);
+if (flags['--watch']) {
+    (new Watcher(app)).start();
+} else {
 
-watcher.start();
+}
