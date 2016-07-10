@@ -76,6 +76,10 @@ class Watcher
                     if (error) { return console.log(error); }
 
                     console.log(`File saved on ${this.app.config.get('output')}`);
+
+                    if (! this.app.config.get('flags')['--watch']) {
+                        process.exit();
+                    }
                 });
 
             });

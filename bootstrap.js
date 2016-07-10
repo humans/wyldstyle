@@ -9,6 +9,16 @@ let Config = require('./src/Config');
  */
 function extract_flags(args)
 {
+    let defaults = {'--watch': false};
+
+    let boolean_flags = extract_boolean_flags(args);
+    let argument_flags = extract_flags_with_arguments(args);
+
+    return Object.assign(defaults, boolean_flags, argument_flags);
+}
+
+function extract_flags_with_arguments (args)
+{
     let allowed_flags = ['--ignore', '-i', '--output', '-o'];
     let flags = {};
 
@@ -26,8 +36,35 @@ function extract_flags(args)
     return flags;
 }
 
+function extract_boolean_flags (args) 
+{
+    let allowed_flags = ['--watch', '-w'];
+    let flags = {};
+
+    for (flag of allowed_flags) {
+        if(! args.includes(flag)) {
+            continue;
+        }
+
+        let key = args.splice(args.indexOf(flag), 1);
+
+        flags[key] = true;
+    }
+
+    return flags;
+}
+
+let defaults = {
+    prefix: 'u-',
+    breakpoints: {},
+    directory: [],
+    output: null,
+    emmet: {
+        syntax: 'css',
+        "snippets": {}
+    },
+};
 let path = `${process.cwd()}/wyldstyle.json`;
-let source = 'cli';
 let args = process.argv;
 let flags = extract_flags(args);
 
@@ -41,8 +78,10 @@ try {
     filesystem.accessSync(path, fs.F_OK);
 
     options = JSON.parse(filesystem.readFileSync(path, 'utf8'));
-    source  = path;
-} catch (error) {}
+    options = Object.assign(defaults, options);
+} catch (error) {
+    options = defaults;
+}
 
 // Load the flags.
 options.flags = flags;
@@ -52,12 +91,17 @@ if ('--output' in flags || '-o' in flags) {
     options.output = flags['--output'] || flags['-o'];
 }
 
+// @todo add a flag when an output is not given.
+if (! options.output) {
+    throw 'No --output file specified';
+}
+
 emmet.loadPreferences(options.emmet.preferences);
 emmet.loadSnippets({
     "css": { "snippets": options.emmet.snippets }
 });
 
 module.exports = {
-    config: new Config(options, source),
+    config: new Config(options),
     emmet:  emmet,
 };

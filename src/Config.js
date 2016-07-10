@@ -4,25 +4,10 @@ class Config {
     /**
      * Create a new config store.
      * @param  {Object} config = {}
-     * @param  {String} source = null
      * @return {Config}
      */
-    constructor(config = {}, source = null) {
-        let defaults = {
-            prefix: 'u-',
-            breakpoints: {},
-            directory: null,
-            output: null,
-            emmet: {
-                syntax: 'css',
-                "snippets": {}
-            },
-        };
-
-        Object.assign(defaults, config);
-
-        this.config = defaults;
-        this.config.source = source;
+    constructor(config = {}) {
+        this.config = config;
     }
 
     /**
