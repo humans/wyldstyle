@@ -1,5 +1,31 @@
 # Wyldstyle
 
+~~~bash
+$ ws directory1 file1.html directory2 --watch --output _utilities.scss
+~~~
+
+~~~
+{
+    "breakpoints": {
+        "m":  "breakpoint(mobile)",
+        "l":  "breakpoint(tablet)",
+        "xl":  "breakpoint(retina)"
+    },
+    "directory": ["file1.html"],
+    "output": "_utilities.scss",
+    "emmet": {
+        "syntax": "scss",
+        "preferences": {
+            "caniuse.enabled": false,
+            "css.autoInsertVendorPrefixes": false
+        },
+        "snippets": {
+            "m:0a": "margin: 0 auto"
+        }
+    }
+}
+~~~
+
 # Todo
 - [ ] Logo?
 - [ ] Documentation?
