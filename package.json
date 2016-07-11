@@ -1,6 +1,6 @@
 {
   "name": "wyldstyle",
-  "version": "0.3.8",
+  "version": "0.4.1",
   "description": "Emmet based CSS utility generator",
   "main": "index.js",
   "bin": {
