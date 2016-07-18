@@ -117,6 +117,12 @@ Now, our config file should look something like this:
 
 Take note that _any command line argument will override the config file._
 
+**Breakpoints**
+
+Breakpints are actually dynamic here. The key, (`m`, `l`, `xl`) can actually be interchanged to what you prefer. The config we provide as an example stands for `medium`, `large`, `extra large`.
+
+An example is, you can change it up `m`, `t`, `d`, `r`, to stand for `mobile`, `tablet`, `desktop`, and `retina`. It should immediately take place when parsing the markup `u-p:3p@r`.
+
 **Configuring Emmet**
 
 The emmet config actually just uses the **direct emmet npm api**. There's documentation for both the preferences and the snippets which you can look up here:
@@ -140,13 +146,43 @@ On our end, we disable `caniuse.enabled` and `css.autoInsertVendorPrefixes` by d
 
 When it comes to development, we usually create a dedicated file called `_utilities.scss` file where wyldstyle writes up our utilities and we import it to the master theme file.
 
+### Responsive
+
+For the breakpoints, we prefer creating a map that holds our variables and reference the function to call the breakpoint instead. Just for maintainability and fluency.
+
+**_breakpoints.scss**
+
+```sass
+$breakpoints: (
+    tablet:  1rem,
+    desktop: 2rem,
+    retina:  3rem
+);
+
+@function breakpoint ($breakpoint) {
+    @return map-get($breakpoints, $breakpoint);
+}
+```
+
+**wyldstyle.json**
+
+```json
+{
+    "breakpoints": {
+        "m": "breakpoint(tablet)",
+        "l": "breakpoint(desktop)",
+        "xl": "breakpoint(retina)"
+    }
+}
+```
+
 ## Roadmap and Enhancements
 
 ### 1.0
 
 **Hover States**
 
-`@h` hover state implementation
+Implement the `@h` postfix for hover states. `u-c:$font-color-hover@h` and be parsed to `.u-c\:\$font-color-hover\@h:hover { color: $font-color-hover; }`
 
 **Custom Dynamic Snippets**
 
@@ -207,7 +243,7 @@ Now this is something I particularly want to implement correctly but I don't hav
 
 This comes in tied in with most of the features for the definite versions since most of the configuration needs to be done language first.
 
-```
+```javascript
 wyldstyle(directories, {
     events: {
         preCompile: function (abbreviation) {
