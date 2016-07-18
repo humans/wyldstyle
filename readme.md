@@ -192,3 +192,30 @@ I'm thinking a notification should be triggered, or a callback should be trigger
 It's planned to support a more extensible architecture to provide different approaches on usage for Wyldstyle. Of course, this is tailored on how we develop on the frontend but by allowing an extension/plugin architecture, it may be possible to hook into `pre-expansion`, `post-expansion` and `post-compile` events to do added processing.
 
 In the long run, we want to export the **style-guide**, **hover states**, **breakpoints**, and even the **snippets** into the extension to just have a proof of concept on hand.
+
+By implementing this we may even add another flag for the command line tool for transformations.
+
+```bash
+wyldstyle index.html --watch --output css/utilities.css --transform autoprefixer
+```
+
+### No Particular Version
+
+**Javascript API Configurability**
+
+Now this is something I particularly want to implement correctly but I don't have any shred of idea how to.
+
+This comes in tied in with most of the features for the definite versions since most of the configuration needs to be done language first.
+
+```
+wyldstyle(directories, {
+    events: {
+        preCompile: function (abbreviation) {
+            return abbreviation;
+        },
+        postCompile: function (style) {
+            return style;
+        },
+    }
+});
+```
