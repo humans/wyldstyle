@@ -4,9 +4,9 @@ let Store = require('../src/Config/Store.js');
 describe('Config Store', () => {
     describe('#all', () => {
         it('has default values given no arguments', () => {
-            let builder = new Store;
+            let store = new Store;
 
-            let actual = builder.all();
+            let actual = store.all();
             let expected = {
                 prefix: 'u-',
                 breakpoints: {},
@@ -24,9 +24,9 @@ describe('Config Store', () => {
 
     describe('#merge', () => {
         it('merges the attributes with the defaults', () => {
-            let builder = new Store;
+            let store = new Store;
 
-            let actual = builder.merge({
+            let actual = store.merge({
                 directories: ['tests/'],
                 output: 'utilities.css'
             }).all();
