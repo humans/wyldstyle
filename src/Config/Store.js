@@ -1,4 +1,4 @@
-class Builder
+class Store
 {
     /**
      * Create a new builder.
@@ -22,7 +22,7 @@ class Builder
      * Merge the new config to the defaults.
      */
     merge (config) {
-        return new Builder(config);
+        return new Store(config);
     }
 
     /**
@@ -33,4 +33,4 @@ class Builder
     }
 }
 
-module.exports = Builder;
+module.exports = Store;

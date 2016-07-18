@@ -1,10 +1,10 @@
 let { assert } = require('chai');
-let Builder = require('../src/Config/Builder.js');
+let Store = require('../src/Config/Store.js');
 
-describe('Config Builder', () => {
+describe('Config Store', () => {
     describe('#all', () => {
         it('has default values given no arguments', () => {
-            let builder = new Builder;
+            let builder = new Store;
 
             let actual = builder.all();
             let expected = {
@@ -24,7 +24,7 @@ describe('Config Builder', () => {
 
     describe('#merge', () => {
         it('merges the attributes with the defaults', () => {
-            let builder = new Builder;
+            let builder = new Store;
 
             let actual = builder.merge({
                 directories: ['tests/'],
@@ -41,7 +41,6 @@ describe('Config Builder', () => {
                     "snippets": {}
                 },
             };
-
 
             assert.deepEqual(expected, actual);
         });
