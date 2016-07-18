@@ -1,53 +1,194 @@
 # Wyldstyle
 
-~~~bash
-$ ws directory1 file1.html directory2 --watch --output _utilities.scss
-~~~
+Wyldstyle is an utility builder script that relies on [Emmet](http://emmet.io) conventions to create modular and reusable classes for creating layouts on the front end.
 
-~~~
+It is inspired by [Tachyons](http://tachyons.io) wherein, your markup has highly reusable classes to avoid developers from writing as much css as possible.
+
+This script has both a generator and a watcher. By running a watcher, you can continue coding directly on the markup while the utility stylesheet is being generated dynamically.
+
+## Preview
+
+Wyldstyle extracts out the utilities you've set, runs them through emmmet and writes them to a file. In this preview, we'll show the support for **breakpoints**, **hover states**, and **preprocessor variables**.
+
+### Markup
+
+```html
+<section class="article-list [ u-d:fx u-jc:sb u-m:0a ]">
+  <article class="article [ u-p:1r u-mb:1.5r u-mb:2r@l ]">
+    <h1 class="article__title [ u-tt:u u-td:n u-c:$link-color u-c:$link-color-hover@h ]"><a href="#">Article Title</a></h1>
+
+     <p class="article__excerpt [ u-lh:1.5 ]">orem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed tortor mattis, blandit nisi tincidunt, ultrices turpis.</p>
+  </article>
+</section>
+```
+
+### Generated CSS
+
+```css
+.u-c\:\$link-color { color: $link-color; }
+.u-c\:\$link-color-hover\@h:hover { color: $link-color-hover; }
+.u-d\:fx { display: flex; }
+.u-jc\:sb { justify-content: space-between; }
+.u-lh\:1\.5 { line-height: 1.5; }
+.u-m\:0a { margin: 0 auto; }
+.u-mb\:1\.5r { margin-bottom: 1.5rem; }
+.u-p\:1r { padding: 1rem; }
+.u-td\:n { text-decoration: none; }
+.u-tt\:u { text-transform: uppercase; }
+
+@media (min-width: 768px) {
+
+}
+
+@media (min-width: 1024px) {
+  .u-mb\:2r\@l { margin-bottom: 2rem; }
+}
+
+@media (min-width: 1200px) {
+
+}
+```
+
+## Getting Started
+
+**We need to install the wyldstyle command line tool from npm.**
+
+```bash
+npm install wyldstyle --save-dev
+```
+
+**NOTE:** You can also install it globally but we prefer using npm scripts so everything we need is explicitly stated in our package.json files.
+
+**Next up is to tell wyldstyle to watch our markup file for changes and write them to a stylesheet**
+
+```bash
+wyldstyle index.html article.html --output css/theme.css --watch
+```
+
+## Usage and Configuration
+
+### Command Line
+
+```bash
+wyldstyle [target directory or file] [--flags] [--output] [--watch]
+```
+
+Wyldstyle has multiple ways in passing arguments but it's flexibility and advanced configuration comes in a `wyldstyle.json` file.
+
+Before we run through that, let's first look at the command line arguments since command line flags are enough for most.
+
+By default, wyldstyle just runs through all the files once and writes them to a file.
+
+| Flags      | Alias   | Multiple? | Description                                                |
+|------------|---------|-----------|------------------------------------------------------------|
+| `--output` | `-o`    | No        | The file where wyldstyle will write the utilities on.      |
+| `--ignore` | `-i`    | Yes       | File or directory to ignore when watching the directories. |
+| `--watch`  | `-w`    | No        | Start watching the directories provided                    |
+
+### Config File
+
+Using a config file on the otherhand makes it much manageable when woring on a project rather than just a prototype. When using the config file, we write up a `wyldstyle.json` file in the project root.
+
+In the cofiguration file, we can set **custom breakpoints** and **configure emmet** as well!
+
+Now, our config file should look something like this:
+
+```json
 {
-    "breakpoints": {
-        "m":  "breakpoint(mobile)",
-        "l":  "breakpoint(tablet)",
-        "xl":  "breakpoint(retina)"
+  "breakpoints": {
+    "m":  "768px",
+    "l":  "1024px",
+    "xl": "1200px"
+  },
+  "directory": ["assets/js", "templates"],
+  "output": "assets/scss/_utilities.scss",
+  "emmet": {
+    "syntax": "scss",
+    "preferences": {
+      "caniuse.enabled": false,
+      "css.autoInsertVendorPrefixes": false
     },
-    "directory": ["file1.html"],
-    "output": "_utilities.scss",
-    "emmet": {
-        "syntax": "scss",
-        "preferences": {
-            "caniuse.enabled": false,
-            "css.autoInsertVendorPrefixes": false
-        },
-        "snippets": {
-            "m:0a": "margin: 0 auto"
-        }
+    "snippets": {
+      "m:0a": "margin: 0 auto;"
+    }
+  }
+}
+```
+
+Take note that _any command line argument will override the config file._
+
+**Configuring Emmet**
+
+The emmet config actually just uses the **direct emmet npm api**. There's documentation for both the preferences and the snippets which you can look up here:
+- [Preferences](http://docs.emmet.io/customization/preferences/)
+- [Snippets](http://docs.emmet.io/customization/snippets/)
+
+As a quick start guide, here are the most common preferences we use:
+
+| Preference                     | Default | Description                                               |
+|--------------------------------|---------|-----------------------------------------------------------|
+| `caniuse.enabled`              | `true`  | This prefixes the attributes like `display: -webkit-flex` |
+| `css.autoInsertVendorPrefixes` | `true`  | Emmet runs an autoprefixer for css classes                |
+
+## On How We Use It
+
+### Configuration
+
+On our end, we disable `caniuse.enabled` and `css.autoInsertVendorPrefixes` by default since we use pre-processors in project development and rely on post-css to generate the prefixes rather than inserting them directly on our stylesheets. Though this is purely for cleanliness' sake.
+
+### Development
+
+When it comes to development, we usually create a dedicated file called `_utilities.scss` file where wyldstyle writes up our utilities and we import it to the master theme file.
+
+## Roadmap and Enhancements
+
+### 1.0
+
+**Hover States**
+
+`@h` hover state implementation
+
+**Custom Dynamic Snippets**
+
+The current support for snippets are hardcoded values. We want to start supporting custom snippets with a bit more variability to it.
+
+```json
+{
+    "m:0a": "margin: 0 auto;"
+}
+```
+
+Currently, I'm not really sure how to implement a snippet where the stylesheet attribute value is customizable.
+
+```json
+{
+    "grid:3": "flex:basis: calc((100%/{value}) - 2);"
+}
+```
+
+### 1.1
+
+**Style Guide**
+
+Add support for a forced style guide or format in the config file.
+
+```json
+{
+    "format": {
+        "padding":   ["0.5r", "1r", "1.5r"],
+        "margin":    ["0.5r", "1r", "1.5r"],
+        "font-size": ["1r"],
+        "color":     ["$black", "$red"]
     }
 }
-~~~
+```
 
-# Todo
-- [ ] Logo?
-- [ ] Documentation?
-- [x] Create a config file reference to remove the dependency from the cli arguments.[x]
-- [x] Refactor the caching algorithm to remove classes that were erased in the given file.
-- [x] Add compatibility with task runners.
-- [x] Structure the application better.
-- [x] Add support for dot classes.
-- [x] Extract the caching into it's own module for testability.
-- [x] Refactor out to ES6.
-- [x] Add responsive selectors.
-- [x] Add breakpoints on the config file.
-- [x] Expand more on the configurability through a JSON file.
-- [x] Add defaults for the config.
-- [x] Add dynamic breakpoints for the whole watcher.
-- [x] Use the config object as an injection rather than the json object.
-- [ ] Refactor out the caching logic since the wrapper solution is just a quick hack.
-- [ ] Create a wrapper class to handle the responsive content strings.
-- [x] Create a config for emmet for both preferences and snippets.
-- [x] Create custom snippets on the json config.
-- [ ] Add an option to set hover states with `@h`.
-- [x] Add an option to ignore certain directories.
-- [x] Add the feature to select directories with the CLI and merge the preferences from the json file.
-- [x] Add the flag for the output rather than just the last parameter.
-- [ ] Refactor out the flag logic to it's own class.
+This is just better enforcement for large scale team projects to avoid cutting corners.
+
+I'm thinking a notification should be triggered, or a callback should be triggered when compiling when a non-allowed value has been paired with the attribute. Just in case the developer ends up forgetting about the style guide.
+
+**Extension Support**
+
+It's planned to support a more extensible architecture to provide different approaches on usage for Wyldstyle. Of course, this is tailored on how we develop on the frontend but by allowing an extension/plugin architecture, it may be possible to hook into `pre-expansion`, `post-expansion` and `post-compile` events to do added processing.
+
+In the long run, we want to export the **style-guide**, **hover states**, **breakpoints**, and even the **snippets** into the extension to just have a proof of concept on hand.
