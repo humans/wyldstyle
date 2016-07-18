@@ -1,6 +1,9 @@
 class Builder
 {
-    constructor () {
+    /**
+     * Create a new builder.
+     */
+    constructor (config = {}) {
         let defaults = {
             prefix: 'u-',
             breakpoints: {},
@@ -12,13 +15,19 @@ class Builder
             },
         };
 
-        this.config = defaults;
+        this.config = Object.assign(defaults, config);
     }
 
-    merge () {
-
+    /**
+     * Merge the new config to the defaults.
+     */
+    merge (config) {
+        return new Builder(config);
     }
 
+    /**
+     * Return the config.
+     */
     all () {
         return this.config;
     }

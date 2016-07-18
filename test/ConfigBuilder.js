@@ -26,12 +26,11 @@ describe('Config Builder', () => {
         it('merges the attributes with the defaults', () => {
             let builder = new Builder;
 
-            builder.merge({
+            let actual = builder.merge({
                 directories: ['tests/'],
+                output: 'utilities.css'
+            }).all();
 
-            });
-
-            let actual = builder.all();
             let expected = {
                 prefix: 'u-',
                 breakpoints: {},
