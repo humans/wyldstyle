@@ -1,9 +1,20 @@
 let _ = require('underscore');
 
+/**
+ * This takes in the command line arguments and parses it into something much
+ * more coherent.
+ *
+ * This is a refactor of the bootstrap.js file wherein the CLI arguments were
+ * parsed and validated through so all hell broke loose when new arguments
+ * started popping in.
+ */
 class Builder
 {
     /**
      * Create a new builder.
+     *
+     * @param  {Object}  args
+     * @return Builder
      */
     constructor (args) {
         this.args = args;
@@ -11,6 +22,8 @@ class Builder
 
     /**
      * Build the argument into a config file.
+     *
+     * @return {Object}
      */
     build () {
         let flags = this._extractFlags();
@@ -25,11 +38,20 @@ class Builder
 
     /**
      * Extract the flags from the arguments.
+     *
+     * Map through the available flags and fetch the indexes from the array.
+     * From there, we measure the gap between the elements to fetch any parameters
+     * that may have been set for that flag.
+     *
+     * Rather than looping through the arguments, I kinda think this i much more
+     * manageable.
+     *
+     * @return {Object}
      */
     _extractFlags () {
-        let flags  = {};
+        let flags = {};
 
-        let chunks = ['--watch', '--output', '--ignore']
+        ['--watch', '--output', '--ignore']
             .map(flag => {
                 return {
                     index:   this.args.indexOf(flag), // The current position after splicing.
