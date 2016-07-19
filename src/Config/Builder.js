@@ -15,7 +15,12 @@ class Builder
     build () {
         let flags = this._extractFlags();
 
-        return {};
+        flags.output = flags.output.shift();
+
+        return Object.assign(
+            { directories: this.args },
+            flags
+        );
     }
 
     /**
@@ -23,23 +28,29 @@ class Builder
      */
     _extractFlags () {
         let flags  = {};
+
         let chunks = ['--watch', '--output', '--ignore']
-            .map(flag => this.args.indexOf(flag))
-            .sort()
-            .map((start, index, self) => {
-                let end = self[index + 1] || this.args.length;
+            .map(flag => {
+                return {
+                    index:   this.args.indexOf(flag), // The current position after splicing.
+                    pointer: this.args.indexOf(flag), // Reference for the original position.
+                }
+            })
+            .filter(flag => flag.pointer > 0)
+            .sort((a, b) => a.index > b.index)
+            .forEach((flag, index, self) => {
+                let next  = self[index + 1] || { pointer: 99 };
+                let items = next.pointer - flag.pointer;
+                let args  = this.args.splice(flag.index, items);
 
-                return this.args.slice(start, end);
+                next.index = flag.index; // Reallocate the pointer for splicing.
+
+                flags[args.shift().replace('--', '')] = args.length ? args : true;
             });
-
-        chunks.forEach(chunk => {
-            let flag = chunk.shift().replace('--', '');
-
-            flags[flag] = chunk ? chunk : true;
-        });
 
         return flags;
     }
 }
 
 module.exports = Builder;
+
