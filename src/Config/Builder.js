@@ -1,5 +1,3 @@
-let _ = require('underscore');
-
 /**
  * This takes in the command line arguments and parses it into something much
  * more coherent.
