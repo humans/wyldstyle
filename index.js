@@ -1,10 +1,6 @@
 let config = require('./bootstrap.js');
 
-console.error(config.all());
-
-// console.error(config);
-
-// console.error(config.all());
+config.validate();
 
 // let Watcher = require('./src/Watcher');
 // let usage = 'Usage: wyldstyle <directory> <output> [--config=<wyldstyle.json>]';

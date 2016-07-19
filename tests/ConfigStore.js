@@ -1,4 +1,4 @@
-let { assert } = require('chai');
+let { assert, expect } = require('chai');
 let Store = require('../src/Config/Store.js');
 
 describe('Config Store', () => {
@@ -43,6 +43,14 @@ describe('Config Store', () => {
             };
 
             assert.deepEqual(expected, actual);
+        });
+    });
+
+    describe('#validate', () => {
+        it('throws', () => {
+            let store = new Store;
+
+            expect(store.validate).to.throw(Error)
         });
     });
 });

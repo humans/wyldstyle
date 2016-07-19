@@ -39,6 +39,19 @@ class Store
     all () {
         return this.config;
     }
+
+    /**
+     * Validate the options.
+     *
+     * @return Boolean
+     */
+    validate () {
+        if (! this.config.output) {
+            throw new Error('No output file specified. --output');
+        }
+
+        return true;
+    }
 }
 
 module.exports = Store;
