@@ -30,6 +30,10 @@ class Builder
             flags.output = flags.output.shift();
         }
 
+        if (this.args.length < 1) {
+            return flags;
+        }
+
         return Object.assign(
             { directories: this.args },
             flags
