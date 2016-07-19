@@ -6,8 +6,6 @@ try {
     console.error(error);
 }
 
-console.error(config.all());
-
 // let Watcher = require('./src/Watcher');
 // let usage = 'Usage: wyldstyle <directory> <output> [--config=<wyldstyle.json>]';
 // let app = require('./bootstrap');
