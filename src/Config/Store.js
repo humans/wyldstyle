@@ -32,6 +32,16 @@ class Store
     }
 
     /**
+     * Get the value for the given key.
+     *
+     * @param  {String} key
+     * @return {mixed}
+     */
+    get (key) {
+        return this.config[key];
+    }
+
+    /**
      * Return the config.
      *
      * @return {Object}

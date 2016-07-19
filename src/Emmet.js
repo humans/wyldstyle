@@ -3,13 +3,25 @@ class Emmet
     /**
      * Create a new emmet.
      *
-     * @param  {Object} emmet
      * @param  {Object} options
      * @return {Emmet}
      */
-    constructor (emmet, options = {}) {
-        this.emmet = emmet;
+    constructor (options = {}) {
         this.options = options;
+        this.emmet = this.setEmmet();
+    }
+
+    setEmmet () {
+        let emmet = require('emmet');
+
+        if ('emmet' in this.options) {
+            emmet.loadPreferences(this.options.emmet.preferences);
+            emmet.loadSnippets({
+                "css": { "snippets": this.options.emmet.snippets }
+            });
+        }
+
+        return emmet;
     }
 
     /**

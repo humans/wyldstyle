@@ -5,7 +5,7 @@ let expander = require('emmet');
 describe("Emmet", () => {
     describe("#expand", () => {
         it("generates the css from the given utilities", () => {
-            let emmet = new Emmet(expander, {
+            let emmet = new Emmet({
                 prefix: 'u-',
                 syntax: 'css',
             });
@@ -20,7 +20,7 @@ describe("Emmet", () => {
         });
 
         it("generates the css removing the media queries", () => {
-            let emmet = new Emmet(expander, {
+            let emmet = new Emmet({
                 prefix: 'u-',
                 syntax: 'css',
             });
