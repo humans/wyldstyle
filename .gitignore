@@ -41,5 +41,5 @@ jspm_packages
 .node_repl_history
 
 # Project specific scheisse.
-lucy.css
-wyldstyle.json
+/utilities.css
+/wyldstyle.json

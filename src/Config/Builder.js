@@ -12,7 +12,7 @@ class Builder
      * Create a new builder.
      *
      * @param  {Object}  args
-     * @return Builder
+     * @return {Object}
      */
     constructor (args) {
         this.args = args;
@@ -26,7 +26,9 @@ class Builder
     build () {
         let flags = this._extractFlags();
 
-        flags.output = flags.output.shift();
+        if ('output' in flags) {
+            flags.output = flags.output.shift();
+        }
 
         return Object.assign(
             { directories: this.args },
@@ -56,7 +58,7 @@ class Builder
                     pointer: this.args.indexOf(flag), // Reference for the original position.
                 }
             })
-            .filter(flag => flag.pointer > 0)
+            .filter(flag => flag.pointer >= 0)
             .sort((a, b) => a.index > b.index)
             .forEach((flag, index, self) => {
                 let next  = self[index + 1] || { pointer: 99 };
