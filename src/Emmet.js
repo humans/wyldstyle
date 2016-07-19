@@ -25,12 +25,7 @@ class Emmet
             let shorthand = utility.replace(`${this.options.prefix}`, '')
                                    .replace(/\@[0-9A-Za-z]+/g, '');
 
-            let selector = utility.replace(':', "\\:")
-                                  .replace('.', "\\.")
-                                  .replace('$', "\\$")
-                                  .replace('!', "\\!")
-                                  .replace('@', "\\@");
-
+            let selector = this._buildSelector(utility)
             let expanded = this.emmet
                    .expandAbbreviation(shorthand, this.options.syntax)
                    .replace("\\$", "$");
@@ -39,6 +34,19 @@ class Emmet
         }
 
         return css;
+    }
+
+    /**
+     * Build the selector.
+     *
+     * @return {String}
+     */
+    _buildSelector (utility) {
+        return utility.replace(':', "\\:")
+            .replace('.', "\\.")
+            .replace('$', "\\$")
+            .replace('!', "\\!")
+            .replace('@', "\\@");
     }
 }
 

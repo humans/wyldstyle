@@ -13,7 +13,7 @@ describe("Emmet", () => {
 
             let expected = [
                 '.u-p\\:20 { padding: 20px; }',
-                '.u-mb\\:30 { margin-bottom: 30px; }'
+                '.u-mb\\:30 { margin-bottom: 30px; }',
             ];
 
             assert.deepEqual(expected, emmet.expand(parameters));
@@ -28,7 +28,7 @@ describe("Emmet", () => {
 
             let expected = [
                 '.u-p\\:20\\@m { padding: 20px; }',
-                '.u-mb\\:30\\@m { margin-bottom: 30px; }'
+                '.u-mb\\:30\\@m { margin-bottom: 30px; }',
             ];
 
             assert.deepEqual(expected, emmet.expand(parameters));
