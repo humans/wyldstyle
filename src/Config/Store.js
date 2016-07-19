@@ -50,6 +50,10 @@ class Store
             throw new Error('No output file specified. --output');
         }
 
+        if (this.config.directories.length < 1) {
+            throw new Error('No files or directories to watch.');
+        }
+
         return true;
     }
 }

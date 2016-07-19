@@ -46,12 +46,20 @@ describe('Config Store', () => {
         });
     });
 
-    describe('#validate', () => {
-        it('throws', () => {
-            let store = new Store;
-
-            expect(store.validate).to.throw(Error)
-        });
-    });
+    // describe('#validate', () => {
+    //     it("throws an error when there's no output directory", () => {
+    //         let store = new Store;
+    //
+    //         expect(store.validate).to.throw(Error)
+    //     });
+    //
+    //     it("throws and error when there's no target directories", () => {
+    //         let store = new Store({
+    //             output: 'utilities.css'
+    //         });
+    //
+    //         expect(store.validate).to.throw(Error)
+    //     });
+    // });
 });
 
