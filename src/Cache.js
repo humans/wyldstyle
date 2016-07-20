@@ -1,24 +1,38 @@
-var Arr = require('./Arr');
+let Arr = require('./Arr');
 
-class Cache {
+class Cache
+{
+    /**
+     * Create a new cache store.
+     *
+     * @return {Cache}
+     */
     constructor() {
         this.store = {};
     }
 
     /**
      * Return the store.
+     *
      * @return {Object}
      */
     all() {
         return this.store;
     }
 
+    /**
+     * Check if the key exists in the cache.
+     *
+     * @param  {String}  key
+     * @return {void}
+     */
     has(key) {
         return key in this.store;
     }
 
     /**
      * Push the value to the given key. Create the array when the key does not exist.
+     *
      * @param  {String} key
      * @param  {mixed} values
      * @return {void}
@@ -34,6 +48,7 @@ class Cache {
 
     /**
      * Return the cache from the given key.
+     *
      * @param  {String} key
      * @return {Array}
      */
@@ -43,6 +58,7 @@ class Cache {
 
     /**
      * Return the compiled flat array.
+     *
      * @return {Array}
      */
     compile() {
@@ -57,23 +73,6 @@ class Cache {
         compiled.sort();
 
         return Arr.unique(compiled);
-    }
-
-    /**
-     * Build the css.
-     * @param  {String} wrapper = null
-     * @return {String}
-     */
-    stringify(wrapper = null) {
-        if (! wrapper) {
-            return this.compile().join("\n");
-        }
-
-        let indented = this.compile().map(style => `\t${style}`);
-
-        return `${wrapper} {
-${indented.join("\n")}
-}`;
     }
 }
 
