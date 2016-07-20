@@ -17,7 +17,7 @@ Wyldstyle extracts out the utilities you've set, runs them through emmmet and wr
   <article class="article [ u-p:1r u-mb:1.5r u-mb:2r@l ]">
     <h1 class="article__title [ u-tt:u u-td:n u-c:$link-color u-c:$link-color-hover@h ]"><a href="#">Article Title</a></h1>
 
-     <p class="article__excerpt [ u-lh:1.5 ]">orem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed tortor mattis, blandit nisi tincidunt, ultrices turpis.</p>
+     <p class="article__excerpt [ u-lh:1.5 ]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed tortor mattis, blandit nisi tincidunt, ultrices turpis.</p>
   </article>
 </section>
 ```

@@ -1,4 +1,5 @@
 let config = require('./bootstrap.js');
+let Watcher = require('./src/Watcher.js');
 let Compiler = require('./src/Compiler.js');
 let Filesystem = require('./src/Filesystem.js');
 
@@ -10,7 +11,9 @@ try {
 }
 
 if (config.get('watch')) {
+    console.log(`Watching ${config.get('directories')}`);
 
+    (new Watcher(config)).start();
 } else {
     let files = Filesystem.recursiveFilesSync(config.get('directories'));
     let compiler = new Compiler(config);
