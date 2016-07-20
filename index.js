@@ -12,12 +12,10 @@ try {
 if (config.get('watch')) {
 
 } else {
-    let compiler = new Compiler(
-        Filesystem.recursiveFilesSync(config.get('directories')),
-        config
-    );
+    let files = Filesystem.recursiveFilesSync(config.get('directories'));
+    let compiler = new Compiler(config);
 
-    compiler.compile(config.get('output'));
+    compiler.compile(files);
 }
 
 

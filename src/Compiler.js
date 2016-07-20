@@ -1,38 +1,36 @@
 let filesystem = require('fs');
-let Utility = require('./Utility.js');
-let Emmet = require('./Emmet.js');
-let Cache = require('./Cache.js');
+let Utility    = require('./Utility.js');
+let Emmet      = require('./Emmet.js');
+let Cache      = require('./Cache.js');
 
 class Compiler
 {
     /**
      * Create a new compiler.
      *
-     * @param  {Array}  files
      * @param  {Object}  config
      * @return {Compiler}
      */
-    constructor (files, config) {
-        this.files  = files;
-        this.config = config;
-        this.cache  = this._buildCache();
-
+    constructor (config) {
+        this.config  = config;
+        this.cache   = this._buildCache();
         this.emmet   = new Emmet(config.all());
         this.utility = new Utility(config.get('prefix'), config.get('breakpoints'));
     }
 
-    compile (output) {
-        let prefix      = this.config.get('prefix');
-        let breakpoints = Object.keys(this.config.get('breakpoints'));
+    compile (files) {
+        let prefix = this.config.get('prefix');
+        let output = this.config.get('output');
+        let breakpoints = ['css'].concat(Object.keys(this.config.get('breakpoints')));
 
-        this.files.forEach(file => {
+        files.forEach(file => {
             filesystem.readFile(file, 'utf8', (error, content) => {
                 if (error) { return; }
 
                 let compiled  = [];
                 let utilities = this.utility.extract(content);
 
-                ['css'].concat(breakpoints).forEach(breakpoint => {
+                breakpoints.forEach(breakpoint => {
                     this.cache[breakpoint].push(
                         file,
                         this.emmet.expand(utilities[breakpoint])
@@ -52,6 +50,11 @@ class Compiler
         });
     }
 
+    /**
+     * Create the caching handler for the files.
+     *
+     * @return {Cache}
+     */
     _buildCache () {
         let cache = { css: new Cache  };
 
