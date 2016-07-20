@@ -180,6 +180,12 @@ $breakpoints: (
 
 ### 1.0
 
+**Major Codebase Refactor**
+
+When wyldstyle was first developed, midway of development, it ended up having a lot of hacky solutions for the breakpoints and the compilation. And even though this version has a high probability of being the same, the aim is to have a much more maintainable code base that I wouldn't really want to rewrite after looking at it for a second time. _Hopefully_.
+
+### 1.1
+
 **Hover States**
 
 Implement the `@h` postfix for hover states. `u-c:$font-color-hover@h` and be parsed to `.u-c\:\$font-color-hover\@h:hover { color: $font-color-hover; }`
@@ -202,7 +208,7 @@ Currently, I'm not really sure how to implement a snippet where the stylesheet a
 }
 ```
 
-### 1.1
+### 1.2
 
 **Style Guide**
 
