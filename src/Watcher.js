@@ -22,7 +22,11 @@ class Watcher
     }
 
     _buildIgnoredDirectories () {
-        let ignores = this.config.get('ignore') || [];
+        let ignores = this.config.get('ignore') || null;
+
+        if (! ignores) {
+            return '';
+        }
 
         return new RegExp(`${ignores.join('|')}`);
     }
