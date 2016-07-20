@@ -1,19 +1,16 @@
 let { assert } = require('chai');
-let Tachyons = require('../src/Tachyons');
-let Config = require('../src/Config');
+let Utility = require('../src/Utility');
 
-describe('Tachyons', () => {
+describe('Utility', () => {
     describe('#extract', () => {
+
         it('extracts out the utility classes from the given file content', () => {
-            let config = new Config({
-                prefix: 'u-',
-                breakpoints: {
-                    s: '1rem',
-                    m: '2rem',
-                    l: '3rem',
-                }
+            let utility = new Utility('u-', {
+                s: '1rem',
+                m: '2rem',
+                l: '3rem',
             });
-            let tachyons = new Tachyons({ config: config });
+
             let html = `
             <article class="article [ u-p:20 ]">
                 <h1 class="article__title [ u-mb:24 u-fz:18 u-fz:22@m ]">Hello</h1>
@@ -30,14 +27,12 @@ describe('Tachyons', () => {
                 l: [],
             }
 
-            assert.deepEqual(expected, tachyons.extract(html));
+            assert.deepEqual(expected, utility.extract(html));
         });
 
         it("extracts out the utilities inside quotes", () => {
-            let config = new Config({
-                prefix: 'u-',
-            });
-            let tachyons = new Tachyons({ config: config });
+            let utility = new Utility('u-');
+
             let html = `
             <article class="u-p:20 u-m:22">
                 <article class='u-p:21 u-m:23'>
@@ -49,20 +44,18 @@ describe('Tachyons', () => {
                 css: ['u-m:22', 'u-m:23', 'u-p:20', 'u-p:21'],
             }
 
-            assert.deepEqual(expected, tachyons.extract(html));
+            assert.deepEqual(expected, utility.extract(html));
         });
 
         it('returns an empty array given that the data is undefined', () => {
             let undefined_variable;
-            let config = new Config({
-                prefix: 'u-',
-                breakpoints: {
-                    s: '1rem',
-                    m: '2rem',
-                    l: '3rem',
-                }
+
+            let utility = new Utility('u-', {
+                s: '1rem',
+                m: '2rem',
+                l: '3rem',
             });
-            let tachyons = new Tachyons({ config: config });
+
             let expected = {
                 css: [],
                 s: [],
@@ -70,20 +63,18 @@ describe('Tachyons', () => {
                 l: [],
             }
 
-            assert.deepEqual(expected, tachyons.extract(undefined_variable));
+            assert.deepEqual(expected, utility.extract(undefined_variable));
         });
 
         it('returns an empty array given a string without matches', () => {
             let non_matchable_html = '<html></html>';
-            let config = new Config({
-                prefix: 'u-',
-                breakpoints: {
-                    s: '1rem',
-                    m: '2rem',
-                    l: '3rem',
-                }
+
+            let utility = new Utility('u-', {
+                s: '1rem',
+                m: '2rem',
+                l: '3rem',
             });
-            let tachyons = new Tachyons({ config: config });
+
             let expected = {
                 css: [],
                 s: [],
@@ -91,7 +82,8 @@ describe('Tachyons', () => {
                 l: [],
             }
 
-            assert.deepEqual(expected, tachyons.extract(non_matchable_html));
+            assert.deepEqual(expected, utility.extract(non_matchable_html));
         });
+
     });
 });

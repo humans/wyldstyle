@@ -1,99 +1,36 @@
-let filesystem = require('fs');
 let chokidar = require('chokidar');
-let Builder = require('./Builder');
-let Tachyons = require('./Tachyons');
-let Cache = require('./Cache');
+let Compiler = require('./Compiler.js');
 
 class Watcher
 {
-    /**
-     * Create a new watcher.
-     * @param  {Object} app
-     * @return {Watcher}
-     */
-    constructor(app) {
-        this.app      = app;
-        this.builder  = new Builder(app);
-        this.tachyons = new Tachyons(app);
-        this.cache    = this._setCacheStores();
+    constructor (config) {
+        this.config = config;
+        this.compiler = new Compiler(config);
     }
 
-    /**
-     * Create the regex for ignoring globs.
-     * @return {RegExp}
-     */
-    ignored_directories_regex() {
-        let flags = this.app.config.get('flags');
-        let ignore = '';
+    start () {
+        let watcherConfig = {
+            ignored: this._buildIgnoredDirectories()
+        };
 
-        if (flags.hasOwnProperty('--ignore')) {
-            ignore = `${flags['--ignore']}|`;
+        chokidar.watch(this.config.get('directories'), watcherConfig)
+            .on('all', (event, file) => {
+                console.log(event, file);
+
+                this.compiler.compile([file]);
+            });
+    }
+
+    _buildIgnoredDirectories () {
+        let ignores = this.config.get('ignore') || null;
+
+        if (! ignores) {
+            return '';
         }
 
-        return new RegExp(`^(${ignore}\.|.+\.([sl]*[aec]ss|styl))$`);
-    }
-
-    /**
-     * Start the listener.
-     * @return {void}
-     */
-    start() {
-        let pattern = this.ignored_directories_regex();
-        let breakpoints = Object.keys(this.app.config.get('breakpoints'));
-        breakpoints.unshift('css');
-
-        let watcherConfig = { ignored: pattern };
-
-        chokidar.watch(this.app.config.get('directory'), watcherConfig).on('all', (event, filename) => {
-            console.log(event, filename);
-
-            // Read the file
-            filesystem.readFile(filename, 'utf8', (error, data) => {
-                if (error) { return; }
-
-                let compiled = [];
-                let tachyons = this.tachyons.extract(data);
-
-                // this.cache.css.push(filename, this.builder.generateStyles(tachyons.css));
-                breakpoints.forEach((breakpoint) => {
-                    let wrapper = null;
-                    let metric  = this.app.config.get('breakpoints')[breakpoint];
-
-                    this.cache[breakpoint].push(
-                        filename,
-                        this.builder.generateStyles(tachyons[breakpoint])
-                    );
-
-                    if (breakpoint != 'css') {
-                        wrapper = `@media (min-width: ${metric})`;
-                    }
-
-                    compiled.push(this.cache[breakpoint].stringify(wrapper));
-                });
-
-                // Write the file
-                filesystem.writeFile(this.app.config.get('output'), compiled.join("\n\n"), (error) => {
-                    if (error) { return console.log(error); }
-
-                    console.log(`File saved on ${this.app.config.get('output')}`);
-
-                    if (! this.app.config.get('flags')['--watch']) {
-                        process.exit();
-                    }
-                });
-
-            });
-        });
-    }
-
-    _setCacheStores() {
-        let cache = { css: new Cache };
-        let breakpoints = Object.keys(this.app.config.get('breakpoints'));
-
-        breakpoints.forEach((breakpoint) => { cache[breakpoint] = new Cache });
-
-        return cache;
+        return new RegExp(`${ignores.join('|')}`);
     }
 }
 
 module.exports = Watcher;
+
