@@ -49,6 +49,10 @@ Wyldstyle extracts out the utilities you've set, runs them through emmmet and wr
 }
 ```
 
+The utility classes are prefixed with `u-` which can be changed in the `wyldstyle.json` file and all the utilities follow most Emmet's shortcuts.
+
+**[Here's a link to the Emmet Cheatsheet!](http://docs.emmet.io/cheat-sheet/)**
+
 ## Getting Started
 
 **We need to install the wyldstyle command line tool from npm.**
