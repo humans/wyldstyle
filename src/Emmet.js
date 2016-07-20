@@ -11,6 +11,11 @@ class Emmet
         this.emmet = this.setEmmet();
     }
 
+    /**
+     * Configure emmet.
+     *
+     * @return {emmet}
+     */
     setEmmet () {
         let emmet = require('emmet');
 
@@ -39,7 +44,7 @@ class Emmet
 
             let selector = this._buildSelector(utility)
             let expanded = this.emmet
-                   .expandAbbreviation(shorthand, this.options.syntax)
+                   .expandAbbreviation(shorthand, this.options.emmet.syntax)
                    .replace("\\$", "$");
 
             css.push(`.${selector} { ${expanded} }`);

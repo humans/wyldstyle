@@ -7,7 +7,9 @@ describe("Emmet", () => {
         it("generates the css from the given utilities", () => {
             let emmet = new Emmet({
                 prefix: 'u-',
-                syntax: 'css',
+                emmet: {
+                    syntax: 'css',
+                }
             });
             let parameters = ['u-p:20', 'u-mb:30'];
 
@@ -22,7 +24,9 @@ describe("Emmet", () => {
         it("generates the css removing the media queries", () => {
             let emmet = new Emmet({
                 prefix: 'u-',
-                syntax: 'css',
+                emmet: {
+                    syntax: 'css',
+                }
             });
             let parameters = ['u-p:20@m', 'u-mb:30@m'];
 
