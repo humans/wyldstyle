@@ -1,6 +1,6 @@
 # Wyldstyle
 
-Wyldstyle is an utility builder script that relies on [Emmet](http://emmet.io) conventions to create modular and reusable classes for creating layouts on the front end.
+Wyldstyle is a utility builder that reads your markup and converts your utility classes and runs them through [Emmet](http://emmet.io).
 
 It is inspired by [Tachyons](http://tachyons.io) wherein, your markup has highly reusable classes to avoid developers from writing as much css as possible.
 
