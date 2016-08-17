@@ -3,7 +3,7 @@ let Builder = require('./src/Config/Builder.js');
 let Config = require('./src/Config/Store.js');
 
 let config = new Config;
-let path = `${__dirname}/wyldstyle.json`;
+let path = process.cwd() + '/wyldstyle.json';
 let args = process.argv.slice(2);
 
 /**
