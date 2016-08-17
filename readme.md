@@ -1,14 +1,14 @@
 # Wyldstyle
 
-Wyldstyle is a utility builder that reads your markup and converts your utility classes and runs them through [Emmet](http://emmet.io).
+**Wyldstyle** is a javascript CLI script that reads your markup and writes utility classes for you.
 
-It is inspired by [Tachyons](http://tachyons.io) wherein, your markup has highly reusable classes to avoid developers from writing as much css as possible.
+It's inspired by [Tachyons](http://tachyons.io) and [Atomic CSS](http://acss.io) where, your markup has reusable classes to prevent developers from writing too many styles.
 
-This script has both a generator and a watcher. By running a watcher, you can continue coding directly on the markup while the utility stylesheet is being generated dynamically.
+Wyldstyle has both a compiler and a watcher. Running a watcher, you can just continuously code on the markup while the utility file is generated every time your file has been saved.
 
 ## Preview
 
-Wyldstyle extracts out the utilities you've set, runs them through emmmet and writes them to a file. In this preview, we'll show the support for **breakpoints**, **hover states**, and **preprocessor variables**.
+Wyldstyle extracts out the utilities you've set, runs them through [Emmet](http://emmet.io) and writes them to a file. In this preview, we'll show the support for **breakpoints**, **hover states**, and **variables**.
 
 ### Markup
 
@@ -49,11 +49,13 @@ Wyldstyle extracts out the utilities you've set, runs them through emmmet and wr
 }
 ```
 
-The utility classes are prefixed with `u-` which can be changed in the `wyldstyle.json` file and all the utilities follow most Emmet's shortcuts.
+The utility classes are prefixed with `u-` (which can be changed in the config file [See [Configuring Emmet](#configuring-emmet)]). All the other utilities follow Emmet's conventions.
 
 **[Here's a link to the Emmet Cheatsheet!](http://docs.emmet.io/cheat-sheet/)**
 
 ## Getting Started
+
+This package requires the use of ES6. `node >= 6.*`
 
 **We need to install the wyldstyle command line tool from npm.**
 
@@ -123,7 +125,7 @@ Take note that _any command line argument will override the config file._
 
 **Breakpoints**
 
-Breakpints are actually dynamic here. The key, (`m`, `l`, `xl`) can actually be interchanged to what you prefer. The config we provide as an example stands for `medium`, `large`, `extra large`.
+Breakpoints are configurable. The key, (`m`, `l`, `xl`) can actually be interchanged to what you prefer. The config we provide as an example stands for `medium`, `large`, `extra large`.
 
 An example is, you can change it up `m`, `t`, `d`, `r`, to stand for `mobile`, `tablet`, `desktop`, and `retina`. It should immediately take place when parsing the markup `u-p:3p@r`.
 
