@@ -106,7 +106,7 @@ Now, our config file should look something like this:
     "l":  "1024px",
     "xl": "1200px"
   },
-  "directory": ["assets/js", "templates"],
+  "directories": ["assets/js", "templates"],
   "output": "assets/scss/_utilities.scss",
   "emmet": {
     "syntax": "scss",
